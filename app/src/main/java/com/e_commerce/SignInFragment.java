@@ -46,6 +46,8 @@ public class SignInFragment extends Fragment {
     private EditText email;
     private EditText password;
 
+    private TextView forgotPassword;
+
     private ProgressBar progressBar;
 
     private ImageButton closeBtn;
@@ -73,6 +75,8 @@ public class SignInFragment extends Fragment {
         closeBtn = view.findViewById(R.id.sing_in_close_btn);
         signInBtn = view.findViewById(R.id.sign_in_btn);
 
+        forgotPassword = view.findViewById(R.id.sign_in_forgot_password);
+
         firebaseAuth = FirebaseAuth.getInstance();
 
 
@@ -88,6 +92,13 @@ public class SignInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setFragment(new SignUpFragment());
+            }
+        });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFragment(new ResetPasswordFragment());
             }
         });
 
