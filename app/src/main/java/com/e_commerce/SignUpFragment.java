@@ -88,6 +88,7 @@ public class SignUpFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
 
+
         return view;
 
     }
@@ -303,4 +304,5 @@ public class SignUpFragment extends Fragment {
         startActivity(mainIntent);
         getActivity().finish();
     }
+
 }

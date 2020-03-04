@@ -2,28 +2,38 @@ package com.e_commerce;
 
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.Transaction;
 
 
 /**
@@ -42,6 +52,11 @@ public class ResetPasswordFragment extends Fragment {
 
     private FrameLayout parentFrameLayout;
 
+    private ViewGroup emailIconContainer;
+    private ImageView emailIcon;
+    private TextView emailIconText;
+    private ProgressBar progressBar;
+
     private FirebaseAuth firebaseAuth;
 
 
@@ -54,6 +69,11 @@ public class ResetPasswordFragment extends Fragment {
         registeredEmail = view.findViewById(R.id.forgot_password_email);
         resetPasswordBtn = view.findViewById(R.id.reset_password_btn);
         goBack = view.findViewById(R.id.tv_forgot_password_goback);
+
+        emailIconContainer = view.findViewById(R.id.forgot_password_email_icon_conteinerhorizontal);
+        emailIcon = view.findViewById(R.id.forgot_password_icon_email);
+        emailIconText = view.findViewById(R.id.forgot_password_icon_text);
+        progressBar = view.findViewById(R.id.forgot_password_progressbar);
 
         parentFrameLayout = getActivity().findViewById(R.id.register_framelayout);
 
@@ -86,8 +106,16 @@ public class ResetPasswordFragment extends Fragment {
 
 
         resetPasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
+
+                TransitionManager.beginDelayedTransition(emailIconContainer);
+                emailIconText.setVisibility(View.GONE);
+
+                TransitionManager.beginDelayedTransition(emailIconContainer);
+                emailIcon.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
 
                 resetPasswordBtn.setEnabled(false);
                 resetPasswordBtn.setTextColor(Color.argb(50,255,255,255));
@@ -97,13 +125,56 @@ public class ResetPasswordFragment extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
-                                    Toast.makeText(getActivity(), "Email sent successfully. ", Toast.LENGTH_SHORT).show();
+
+                                    ScaleAnimation scaleAnimation = new ScaleAnimation(1,0,1,0,emailIcon.getWidth()/2,emailIcon.getHeight()/2);
+                                    scaleAnimation.setDuration(100);
+                                    scaleAnimation.setInterpolator(new AccelerateInterpolator());
+                                    scaleAnimation.setRepeatMode(Animation.REVERSE);
+                                    scaleAnimation.setRepeatCount(1);
+
+                                    scaleAnimation.setAnimationListener(new Animation.AnimationListener(){
+                                        @Override
+                                        public void onAnimationStart(Animation animation) {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationEnd(Animation animation) {
+                                            emailIconText.setText("Recovery email sent successfully ! check your inbox");
+                                            emailIconText.setTextColor(getResources().getColor(R.color.successGreen));
+
+
+                                            TransitionManager.beginDelayedTransition(emailIconContainer);
+                                            emailIconText.setVisibility(View.VISIBLE);
+
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationRepeat(Animation animation) {
+                                            emailIcon.setImageResource(R.drawable.email_icon_green);
+
+                                        }
+                                    });
+
+                                    emailIcon.startAnimation(scaleAnimation);
+
+
+
                                 }else {
                                     String error = task.getException().getMessage();
-                                    Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+
+                                    resetPasswordBtn.setEnabled(true);
+                                    resetPasswordBtn.setTextColor(Color.rgb(255,255,255));
+
+                                    emailIconText.setText(error);
+                                    emailIconText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    TransitionManager.beginDelayedTransition(emailIconContainer);
+                                    emailIconText.setVisibility(View.VISIBLE);
+
                                 }
-                                resetPasswordBtn.setEnabled(true);
-                                resetPasswordBtn.setTextColor(Color.rgb(255,255,255));
+                                progressBar.setVisibility(View.GONE);
+
                             }
                         });
             }
