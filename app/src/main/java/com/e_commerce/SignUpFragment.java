@@ -197,8 +197,6 @@ public class SignUpFragment extends Fragment {
     }
 
 
-
-
     private void setFragment(Fragment fragment) {
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
