@@ -1,8 +1,10 @@
 package com.e_commerce;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,14 @@ public class HomeFragment extends Fragment {
     private Timer timer;
     final private long DELAY_TIME = 30000;
     final private long PERIOD_TIME = 30000;
+
+
+    ///// strip ad
+
+    private ImageView stripAdImage;
+    private ConstraintLayout stripAdConteiner;
+
+    ///// strip ad
 
 
     ////////banner slider
@@ -78,28 +89,28 @@ public class HomeFragment extends Fragment {
 
         sliderModelList = new ArrayList<SliderModel>();
 
-        sliderModelList.add(new SliderModel(R.drawable.home));
-        sliderModelList.add(new SliderModel(R.drawable.error_icon));
+        sliderModelList.add(new SliderModel(R.drawable.home, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.error_icon, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.email_icon_green, "#077AE4"));
 
-        sliderModelList.add(new SliderModel(R.drawable.email_icon_green));
-        sliderModelList.add(new SliderModel(R.drawable.email_icon));
-        sliderModelList.add(new SliderModel(R.drawable.ic_menu_camera));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher));
-        sliderModelList.add(new SliderModel(R.drawable.cart_black));
-        sliderModelList.add(new SliderModel(R.drawable.profile_placeholder));
-        sliderModelList.add(new SliderModel(R.drawable.home));
-        sliderModelList.add(new SliderModel(R.drawable.error_icon));
-        sliderModelList.add(new SliderModel(R.drawable.banner));
+        sliderModelList.add(new SliderModel(R.drawable.email_icon, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.ic_menu_camera, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.cart_black, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.profile_placeholder, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.home, "#077AE4"));
 
-        sliderModelList.add(new SliderModel(R.drawable.email_icon_green));
-        sliderModelList.add(new SliderModel(R.drawable.email_icon));
-
+        sliderModelList.add(new SliderModel(R.drawable.error_icon, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.email_icon_green, "#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.email_icon, "#077AE4"));
 
 
         SliderAdapter sliderAdapter = new SliderAdapter(sliderModelList);
         bannerSliderViewPager.setAdapter(sliderAdapter);
         bannerSliderViewPager.setClipToPadding(false);
         bannerSliderViewPager.setPageMargin(20);
+
+        bannerSliderViewPager.setCurrentItem(currentPage);
 
         ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
             @Override
@@ -132,6 +143,19 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
+
+        ///////strip ad
+
+        stripAdImage = view.findViewById(R.id.strip_ad_image);
+        stripAdConteiner = view.findViewById(R.id.strip_ad_conteiner);
+
+
+        stripAdImage.setImageResource(R.drawable.stripad);
+        stripAdConteiner.setBackgroundColor(Color.parseColor("#000000"));
+
+
+        ///////strip ad
+
 
         /////////// banner Slider
 
