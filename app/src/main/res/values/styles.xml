@@ -16,4 +16,11 @@
         <item name="android:windowBackground">@drawable/splash_activity_background</item>
     </style>
 
+    <style name="RedProgressbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#CE0000</item>
+        <item name="colorPrimaryDark">#CE0000</item>
+        <item name="colorAccent">#CE0000</item>
+    </style>
+
 </resources>
