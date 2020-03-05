@@ -15,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,15 @@ public class HomeFragment extends Fragment {
     private ConstraintLayout stripAdConteiner;
 
     ///// strip ad
+
+
+    ////////// horizontal product layout
+
+    private TextView horizontalLayoutTitle;
+    private Button horizontalViewAllBtn;
+    private RecyclerView horizontalRecyclerView;
+
+    ////////// horizontal product layout
 
 
     ////////banner slider
@@ -143,7 +154,7 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
-
+        /////////// banner Slider
         ///////strip ad
 
         stripAdImage = view.findViewById(R.id.strip_ad_image);
@@ -156,8 +167,34 @@ public class HomeFragment extends Fragment {
 
         ///////strip ad
 
+        ////// horizontal Product Layout
 
-        /////////// banner Slider
+        horizontalLayoutTitle = view.findViewById(R.id.horizontal_layaoy_scroll_title);
+        horizontalViewAllBtn = view.findViewById(R.id.horizontal_scroll_viev_all_btn);
+        horizontalRecyclerView = view.findViewById(R.id.horizontal_scroll_recyclerView);
+
+        List<HorizontalProductScrollModel> horizontalProductScrollModelList = new ArrayList<>();
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.phone, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.email_icon, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.error_icon, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.bell, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.add_icon_white, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.my_account, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.my_mall, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.my_orders, "Motorola g77", "Good Procesor New HIT!", "399$"));
+
+        HorizontalProductScrollAdapter horizontalProductScrollAdapter = new HorizontalProductScrollAdapter(horizontalProductScrollModelList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        horizontalRecyclerView.setLayoutManager(linearLayoutManager);
+
+        horizontalRecyclerView.setAdapter(horizontalProductScrollAdapter);
+        horizontalProductScrollAdapter.notifyDataSetChanged();
+
+
+        ////// horizontal Product Layout
+
+
 
 
         return view;
