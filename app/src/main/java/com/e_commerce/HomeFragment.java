@@ -45,8 +45,8 @@ public class HomeFragment extends Fragment {
     private List<SliderModel> sliderModelList;
     private int currentPage = 2;
     private Timer timer;
-    final private long DELAY_TIME = 30000;
-    final private long PERIOD_TIME = 30000;
+    final private long DELAY_TIME = 3000;
+    final private long PERIOD_TIME = 3000;
 
 
     ///// strip ad
@@ -148,7 +148,7 @@ public class HomeFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 pageLooper();
-                startBannerSlideShow();
+                stopBannerSlideShow();
                 if (event.getAction() == MotionEvent.ACTION_UP){
                     startBannerSlideShow();
                 }
@@ -196,6 +196,28 @@ public class HomeFragment extends Fragment {
         ////// horizontal Product Layout
 
 
+        /////////////////////
+
+        RecyclerView testing = view.findViewById(R.id.testing);
+        LinearLayoutManager testingLayoutManager = new LinearLayoutManager(getContext());
+        testingLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        testing.setLayoutManager(testingLayoutManager);
+
+        List<HomePageModel> homePageModelList = new ArrayList<>();
+        homePageModelList.add(new HomePageModel(1,R.drawable.stripad,"#ff0000"));
+        homePageModelList.add(new HomePageModel(0,sliderModelList));
+        homePageModelList.add(new HomePageModel(0,sliderModelList));
+        homePageModelList.add(new HomePageModel(1,R.drawable.stripad,"#000000"));
+        homePageModelList.add(new HomePageModel(1,R.drawable.banner,"#fff000"));
+        homePageModelList.add(new HomePageModel(0,sliderModelList));
+
+        HomePageAdapter adapter = new HomePageAdapter(homePageModelList);
+        testing.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        /////////////////////
+
+
         /////// grid product layout
 
         TextView gridLayoutTitle = view.findViewById(R.id.grid_product_layout_title);
@@ -227,7 +249,6 @@ public class HomeFragment extends Fragment {
         }
 
     }
-
 
     private void startBannerSlideShow(){
         final Handler handler = new Handler();
