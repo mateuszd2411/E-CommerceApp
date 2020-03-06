@@ -1,5 +1,2 @@
-# e-commerce
-e-commerce app
-
-
-e commerce app android studio java firebase 
+App<VIDEO ID>
+https://photos.google.com/share/AF1QipOkwbt_-PRJsUQCcmqvwam9OQGEpjsKhe78-JsAHQiUsfTG6Ww1V5Yv0BVzE1MEVQ/photo/AF1QipMgwjRzMZvk9PKYz4aIZ1NzdA02BLEmjGiyiESR?key=Wl9QQTduaThzNFNQOWVnRnVJZXREajBKZWRZUEVn<VIDEO URL>
