@@ -92,10 +92,10 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         if (id == R.id.main_notification_icon){
-
+            return true;
         }
         if (id == R.id.main_cart_icon){
-
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
