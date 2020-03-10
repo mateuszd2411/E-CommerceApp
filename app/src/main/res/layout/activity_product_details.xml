@@ -43,6 +43,8 @@
 
             <include layout="@layout/reward_with_product_layout"/>
 
+            <include layout="@layout/product_description_layout"/>
+
 
         </LinearLayout>
     </ScrollView>
