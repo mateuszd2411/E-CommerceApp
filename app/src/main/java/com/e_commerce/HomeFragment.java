@@ -175,14 +175,15 @@ public class HomeFragment extends Fragment {
         horizontalRecyclerView = view.findViewById(R.id.horizontal_scroll_recyclerView);
 
         List<HorizontalProductScrollModel> horizontalProductScrollModelList = new ArrayList<>();
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.phone, "Motorola g77", "Good Procesor New HIT!", "399$"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.email_icon, "Motorola g77", "Good Procesor New HIT!", "399$"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.error_icon, "Motorola g77", "Good Procesor New HIT!", "399$"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.bell, "Motorola g77", "Good Procesor New HIT!", "399$"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.add_icon_white, "Motorola g77", "Good Procesor New HIT!", "399$"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.my_account, "Motorola g77", "Good Procesor New HIT!", "399$"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.my_mall, "Motorola g77", "Good Procesor New HIT!", "399$"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.my_orders, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.sport, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.agd, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.garden, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.phone1, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.dress, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.pc, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.car, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.food, "Motorola g77", "Good Procesor New HIT!", "399$"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.bath, "Motorola g77", "Good Procesor New HIT!", "399$"));
 
         HorizontalProductScrollAdapter horizontalProductScrollAdapter = new HorizontalProductScrollAdapter(horizontalProductScrollModelList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -204,10 +205,13 @@ public class HomeFragment extends Fragment {
         testing.setLayoutManager(testingLayoutManager);
 
         List<HomePageModel> homePageModelList = new ArrayList<>();
+        homePageModelList.add(new HomePageModel(0,sliderModelList));
         homePageModelList.add(new HomePageModel(1,R.drawable.stripad,"#ff0000"));
-        homePageModelList.add(new HomePageModel(0,sliderModelList));
-        homePageModelList.add(new HomePageModel(0,sliderModelList));
+        homePageModelList.add(new HomePageModel(2,"Deals of Day",horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(3,"Deals of Day",horizontalProductScrollModelList));
         homePageModelList.add(new HomePageModel(1,R.drawable.stripad,"#000000"));
+        homePageModelList.add(new HomePageModel(3,"Deals of Day",horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(2,"Deals of Day",horizontalProductScrollModelList));
         homePageModelList.add(new HomePageModel(1,R.drawable.banner,"#fff000"));
         homePageModelList.add(new HomePageModel(0,sliderModelList));
 
