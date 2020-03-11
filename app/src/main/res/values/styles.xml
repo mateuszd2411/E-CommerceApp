@@ -3,24 +3,24 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#CE0000</item>
-        <item name="colorPrimaryDark">#CE0000</item>
-        <item name="colorAccent">#ffffff</item>
+        <item name="colorPrimary">#FF5722</item>
+        <item name="colorPrimaryDark">#FF5722</item>
+        <item name="colorAccent">#D0FFFFFF</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#CE0000</item>
-        <item name="colorPrimaryDark">#CE0000</item>
-        <item name="colorAccent">#ffffff</item>
+        <item name="colorPrimary">#FF5722</item>
+        <item name="colorPrimaryDark">#FF5722</item>
+        <item name="colorAccent">#D0FFFFFF</item>
         <item name="android:windowBackground">@drawable/splash_activity_background</item>
     </style>
 
     <style name="RedProgressbar" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#CE0000</item>
-        <item name="colorPrimaryDark">#CE0000</item>
-        <item name="colorAccent">#CE0000</item>
+        <item name="colorPrimary">#FF5722</item>
+        <item name="colorPrimaryDark">#FF5722</item>
+        <item name="colorAccent">#D0FFFFFF</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
