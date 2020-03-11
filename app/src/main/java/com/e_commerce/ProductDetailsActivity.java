@@ -1,16 +1,20 @@
 package com.e_commerce;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -28,6 +32,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private static boolean ALREADY_ADDED_TO_WISHLIST = false;
     private FloatingActionButton addToWishlistBtn;
+
+    /////////rating layout
+    private LinearLayout rateNowContainer;
+    /////////rating layout
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +98,32 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
+        ///////rating layout
+        rateNowContainer = findViewById(R.id.rate_now_container);
+        for (int x = 0; x < rateNowContainer.getChildCount(); x++){
+            final int starPosition = x;
+            rateNowContainer.getChildAt(x).setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onClick(View view) {
+                    setRating(starPosition);
+                }
+            });
+        }
+        ///////rating layout
+
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void setRating(int starPosition) {
+        for (int x = 0; x < rateNowContainer.getChildCount(); x++){
+            ImageView starBtn = (ImageView)rateNowContainer.getChildAt(x);
+            starBtn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#bebebe")));
+            if (x <= starPosition){
+                starBtn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#ffbb00")));
+            }
+        }
 
 
     }
