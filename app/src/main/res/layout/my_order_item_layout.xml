@@ -51,6 +51,8 @@
         android:id="@+id/order_delivered_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:text="Delivered on Mon, 18th Jan 2020"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/order_indicator"

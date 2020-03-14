@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final int HOME_FRAGMENT = 0;
     private static final int CART_FRAGMENT = 1;
+    private static final int ORDERS_FRAGMENT = 2;
 
     private FrameLayout frameLayout;
     private ImageView actionBarLogo;
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         if (id == R.id.main_cart_icon){
-            myCart();
+            gotoFragment("My Cart", new MyCartFragment(), CART_FRAGMENT);
             return true;
 
         }
@@ -106,13 +107,15 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void myCart() {
+    private void gotoFragment(String title, Fragment fragment, int fragmentNo) {
         actionBarLogo.setVisibility(View.GONE);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle("My Cart");
+        getSupportActionBar().setTitle(title);
         invalidateOptionsMenu();
-        setFragment(new MyCartFragment(), CART_FRAGMENT);
-        navigationView.getMenu().getItem(3).setCheckable(true);
+        setFragment(fragment, fragmentNo);
+        if (fragmentNo == CART_FRAGMENT){
+            navigationView.getMenu().getItem(3).setCheckable(true);
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -121,17 +124,16 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
         if (id == R.id.nav_mall){
-
             actionBarLogo.setVisibility(View.VISIBLE);
             invalidateOptionsMenu();
             setFragment(new HomeFragment(), HOME_FRAGMENT);
         }
         else if (id == R.id.nav_orders){
-
+            gotoFragment("My Orders", new MyOrdersFragment(), ORDERS_FRAGMENT);
         } else if (id == R.id.nav_rewards){
 
         }else if (id == R.id.nav_cart){
-            myCart();
+            gotoFragment("My Cart", new MyCartFragment(), CART_FRAGMENT);
         } else if (id == R.id.nav_wishlist){
 
         }else if (id == R.id.nav_account){
