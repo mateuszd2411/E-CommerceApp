@@ -116,6 +116,22 @@ public class HomeFragment extends Fragment {
         homePageModelList.add(new HomePageModel(2,"Deals of Day",horizontalProductScrollModelList));
         homePageModelList.add(new HomePageModel(1,R.drawable.banner,"#fff000"));
         homePageModelList.add(new HomePageModel(0,sliderModelList));
+        homePageModelList.add(new HomePageModel(1,R.drawable.stripad,"#ff0000"));
+        homePageModelList.add(new HomePageModel(2,"Deals of Day",horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(3,"Deals of Day",horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(1,R.drawable.stripad,"#000000"));
+        homePageModelList.add(new HomePageModel(3,"Deals of Day",horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(2,"Deals of Day",horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(1,R.drawable.banner,"#fff000"));
+        homePageModelList.add(new HomePageModel(0,sliderModelList));
+        homePageModelList.add(new HomePageModel(1,R.drawable.stripad,"#ff0000"));
+        homePageModelList.add(new HomePageModel(2,"Deals of Day",horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(3,"Deals of Day",horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(1,R.drawable.stripad,"#000000"));
+        homePageModelList.add(new HomePageModel(3,"Deals of Day",horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(2,"Deals of Day",horizontalProductScrollModelList));
+        homePageModelList.add(new HomePageModel(1,R.drawable.banner,"#fff000"));
+
 
         HomePageAdapter adapter = new HomePageAdapter(homePageModelList);
         testing.setAdapter(adapter);
