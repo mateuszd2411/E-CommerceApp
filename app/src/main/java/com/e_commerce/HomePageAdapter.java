@@ -1,5 +1,6 @@
 package com.e_commerce;
 
+import android.content.Intent;
 import android.content.pm.LabeledIntent;
 import android.graphics.Color;
 import android.os.Handler;
@@ -226,6 +227,14 @@ public class HomePageAdapter extends RecyclerView.Adapter {
             horizontalLayoutTitle.setText(title);
             if (horizontalProductScrollModelList.size() > 8){
                 horizontalViewAllBtn.setVisibility(View.VISIBLE);
+                horizontalViewAllBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent viewAllIntent = new Intent(itemView.getContext(), ViewAllActivity.class);
+                        viewAllIntent.putExtra("layout_code",0);
+                        itemView.getContext().startActivity(viewAllIntent);
+                    }
+                });
             }else {
                 horizontalViewAllBtn.setVisibility(View.INVISIBLE);
             }
@@ -253,6 +262,14 @@ public class HomePageAdapter extends RecyclerView.Adapter {
         private void setGridProductLayout(List<HorizontalProductScrollModel> horizontalProductScrollModelList, String title){
             gridLayoutTitle.setText(title);
             gridView.setAdapter(new GridProductlayoutAdapter(horizontalProductScrollModelList));
+            gridLayoutViewAllBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent viewAllIntent = new Intent(itemView.getContext(), ViewAllActivity.class);
+                    viewAllIntent.putExtra("layout_code",1);
+                    itemView.getContext().startActivity(viewAllIntent);
+                }
+            });
         }
     }
 }
