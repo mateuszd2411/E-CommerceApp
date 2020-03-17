@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Viewhold
         private TextView address;
         private TextView pincode;
         private ImageView icon;
+        private LinearLayout optionContainer;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +64,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Viewhold
             address = itemView.findViewById(R.id.address);
             pincode = itemView.findViewById(R.id.pincode);
             icon = itemView.findViewById(R.id.icon_view);
+            optionContainer = itemView.findViewById(R.id.option_conteiner);
         }
         private void setData(String username, String userAddress, String userPincode, Boolean selected, final int position){
             fullname.setText(username);
@@ -91,6 +94,23 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Viewhold
 
 
             }else if (MODE == MANAGE_ADDRESS){
+                optionContainer.setVisibility(View.GONE);
+                icon.setImageResource(R.drawable.vertical_dots);
+                icon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        optionContainer.setVisibility(View.VISIBLE);
+                        refreshItem(preSelectedPosition,preSelectedPosition);
+                        preSelectedPosition = position;
+                    }
+                });
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        refreshItem(preSelectedPosition,preSelectedPosition);
+                        preSelectedPosition = -1;
+                    }
+                });
 
             }
 
