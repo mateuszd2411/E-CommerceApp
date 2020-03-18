@@ -73,16 +73,16 @@ public class HomeFragment extends Fragment {
 
         sliderModelList.add(new SliderModel(R.drawable.home, "#077AE4"));
         sliderModelList.add(new SliderModel(R.drawable.error_icon, "#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.email_icon_green, "#077AE4"));
 
+        sliderModelList.add(new SliderModel(R.drawable.email_icon_green, "#077AE4"));
         sliderModelList.add(new SliderModel(R.drawable.email_icon, "#077AE4"));
         sliderModelList.add(new SliderModel(R.drawable.ic_menu_camera, "#077AE4"));
         sliderModelList.add(new SliderModel(R.mipmap.ic_launcher, "#077AE4"));
         sliderModelList.add(new SliderModel(R.drawable.cart_black, "#077AE4"));
         sliderModelList.add(new SliderModel(R.drawable.profile_placeholder, "#077AE4"));
         sliderModelList.add(new SliderModel(R.drawable.home, "#077AE4"));
-
         sliderModelList.add(new SliderModel(R.drawable.error_icon, "#077AE4"));
+
         sliderModelList.add(new SliderModel(R.drawable.email_icon_green, "#077AE4"));
         sliderModelList.add(new SliderModel(R.drawable.email_icon, "#077AE4"));
         /////////// banner Slider

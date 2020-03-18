@@ -21,8 +21,12 @@ import android.widget.LinearLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.e_commerce.MainActivity.showCart;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
@@ -158,12 +162,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if (id == android.R.id.home){
             finish();
             return true;
-        }
-        if (id == R.id.main_search_icon){
+        } else if (id == R.id.main_search_icon){
             return true;
 
-        }
-        if (id == R.id.main_cart_icon){
+        } else if (id == R.id.main_cart_icon){
+            Intent cartIntent = new Intent(ProductDetailsActivity.this, MainActivity.class);
+            showCart = true;
+            startActivity(cartIntent);
             return true;
         }
 
