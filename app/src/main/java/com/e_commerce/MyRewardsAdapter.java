@@ -13,6 +13,7 @@ import java.util.List;
 public class MyRewardsAdapter extends RecyclerView.Adapter<MyRewardsAdapter.Viewholder> {
 
     private List<RewardModel> rewardModelList;
+    private Boolean useMiniLayout = false;
 
     public MyRewardsAdapter(List<RewardModel> rewardModelList) {
         this.rewardModelList = rewardModelList;
