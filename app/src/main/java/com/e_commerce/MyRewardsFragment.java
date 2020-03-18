@@ -49,7 +49,7 @@ public class MyRewardsFragment extends Fragment {
         rewardModelList.add(new RewardModel("Discount", "till 2nd, June 2020", "Get 20% OFF on any product above 100$/- and below 500$/-"));
         rewardModelList.add(new RewardModel("Buy 1 get 1 free", "till 2nd, June 2020", "Get 20% OFF on any product above 100$/- and below 500$/-"));
 
-        MyRewardsAdapter myRewardsAdapter = new MyRewardsAdapter(rewardModelList);
+        MyRewardsAdapter myRewardsAdapter = new MyRewardsAdapter(rewardModelList, false);
         rewardsRecyclerView.setAdapter(myRewardsAdapter);
         myRewardsAdapter.notifyDataSetChanged();
 

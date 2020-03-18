@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -14,9 +17,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -32,6 +37,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private ViewPager productImagesViewPager;
     private TabLayout viewpagerIdnicator;
+    private Button coupenRedeemBtn;
+
+    ////coupendialog
+
+    public static TextView coupenTitle;
+    public static TextView coupenExpiryDate;
+    public static TextView coupenBody;
+    private static RecyclerView coupensRecyclerView;
+    private static LinearLayout selectedCoupen;
+
+    ////coupendialog
 
     private ViewPager productDetailsViewpager;
     private TabLayout productDetailsTablayout;
@@ -62,6 +78,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDetailsViewpager = findViewById(R.id.product_details_viewpager);
         productDetailsTablayout = findViewById(R.id.product_details_tablayout);
         buyNowBtn = findViewById(R.id.buy_now_btn);
+        coupenRedeemBtn = findViewById(R.id.coupen_redemption_btn);
 
 
         List<Integer> productImages = new ArrayList<>();
@@ -132,7 +149,76 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
 
 
+        ////coupen dialog
+
+        final Dialog checkCoupenPriceDialog = new Dialog(ProductDetailsActivity.this);
+        checkCoupenPriceDialog.setContentView(R.layout.coupen_redem_dialog);
+        checkCoupenPriceDialog.setCancelable(true);
+        checkCoupenPriceDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        ImageView toggleRecyclerView = checkCoupenPriceDialog.findViewById(R.id.toggle_recyclerview);
+        coupensRecyclerView = checkCoupenPriceDialog.findViewById(R.id.coupens_recyclerview);
+        selectedCoupen = checkCoupenPriceDialog.findViewById(R.id.selected_coupen);
+        coupenTitle = checkCoupenPriceDialog.findViewById(R.id.coupen_title);
+        coupenExpiryDate = checkCoupenPriceDialog.findViewById(R.id.coupen_validity);
+        coupenBody = checkCoupenPriceDialog.findViewById(R.id.coupen_body);
+
+
+        TextView orginalPrice = checkCoupenPriceDialog.findViewById(R.id.orginal_price);
+        TextView discountedPrice = checkCoupenPriceDialog.findViewById(R.id.discounted_price);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(ProductDetailsActivity.this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        coupensRecyclerView.setLayoutManager(layoutManager);
+
+        List<RewardModel> rewardModelList = new ArrayList<>();
+        rewardModelList.add(new RewardModel("Cashback", "till 2nd, June 2020", "Get 20% OFF on any product above 100$/- and below 500$/-"));
+        rewardModelList.add(new RewardModel("Discount", "till 2nd, June 2020", "Get 20% OFF on any product above 100$/- and below 500$/-"));
+        rewardModelList.add(new RewardModel("Buy 1 get 1 free", "till 2nd, June 2020", "Get 20% OFF on any product above 100$/- and below 500$/-"));
+        rewardModelList.add(new RewardModel("Cashback", "till 2nd, June 2020", "Get 20% OFF on any product above 100$/- and below 500$/-"));
+        rewardModelList.add(new RewardModel("Discount", "till 2nd, June 2020", "Get 20% OFF on any product above 100$/- and below 500$/-"));
+        rewardModelList.add(new RewardModel("Buy 1 get 1 free", "till 2nd, June 2020", "Get 20% OFF on any product above 100$/- and below 500$/-"));
+        rewardModelList.add(new RewardModel("Cashback", "till 2nd, June 2020", "Get 20% OFF on any product above 100$/- and below 500$/-"));
+        rewardModelList.add(new RewardModel("Discount", "till 2nd, June 2020", "Get 20% OFF on any product above 100$/- and below 500$/-"));
+        rewardModelList.add(new RewardModel("Buy 1 get 1 free", "till 2nd, June 2020", "Get 20% OFF on any product above 100$/- and below 500$/-"));
+
+        MyRewardsAdapter myRewardsAdapter = new MyRewardsAdapter(rewardModelList, true);
+        coupensRecyclerView.setAdapter(myRewardsAdapter);
+        myRewardsAdapter.notifyDataSetChanged();
+
+        toggleRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogRecyclerview();
+            }
+        });
+
+        ////coupen dialog
+
+        coupenRedeemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                checkCoupenPriceDialog.show();
+            }
+        });
+
+
+
+
     }
+
+    public static void showDialogRecyclerview(){
+        if (coupensRecyclerView.getVisibility() == View.GONE){
+            coupensRecyclerView.setVisibility(View.VISIBLE);
+            selectedCoupen.setVisibility(View.GONE);
+        }else {
+            coupensRecyclerView.setVisibility(View.GONE);
+            selectedCoupen.setVisibility(View.VISIBLE);
+        }
+    }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setRating(int starPosition) {

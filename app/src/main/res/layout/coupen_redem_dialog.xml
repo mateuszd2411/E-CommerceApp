@@ -40,12 +40,13 @@
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:background="@drawable/reward_gradient_background"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggle_recyclerview" />
 
     <LinearLayout
-        android:id="@+id/selected-coupen"
+        android:id="@+id/selected_coupen"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/reward_gradient_background"
@@ -54,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coupens_recyclerview">
 
-        <include layout="@layout/rewards_item_layout" />
+        <include layout="@layout/mini_rewards_item_layout" />
 
     </LinearLayout>
 
@@ -83,7 +84,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imageView16"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selected-coupen" />
+        app:layout_constraintTop_toBottomOf="@+id/selected_coupen" />
 
     <TextView
         android:id="@+id/textView34"
@@ -103,7 +104,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView16"
-        app:layout_constraintTop_toBottomOf="@+id/selected-coupen" />
+        app:layout_constraintTop_toBottomOf="@+id/selected_coupen" />
 
     <TextView
         android:id="@+id/orginal_price"
