@@ -41,9 +41,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.e_commerce.DBqueries.categoryModelList;
-import static com.e_commerce.DBqueries.homePageModelList;
+import static com.e_commerce.DBqueries.lists;
 import static com.e_commerce.DBqueries.loadCategories;
 import static com.e_commerce.DBqueries.loadFragmentdata;
+import static com.e_commerce.DBqueries.loadedCategoriesNames;
 
 
 /**
@@ -91,14 +92,18 @@ public class HomeFragment extends Fragment {
             LinearLayoutManager testingLayoutManager = new LinearLayoutManager(getContext());
             testingLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             homePageRecyclerview.setLayoutManager(testingLayoutManager);
-            adapter = new HomePageAdapter(homePageModelList);
-            homePageRecyclerview.setAdapter(adapter);
 
-            if (homePageModelList.size() == 0){
-                loadFragmentdata(adapter,getContext());
+
+            if (lists.size() == 0){
+                loadedCategoriesNames.add("HOME");
+                lists.add(new ArrayList<HomePageModel>());
+                adapter = new HomePageAdapter(lists.get(0));
+                loadFragmentdata(adapter,getContext(),0,"Home");
             }else {
-                categoryAdapter.notifyDataSetChanged();
+                adapter = new HomePageAdapter(lists.get(0));
+                adapter.notifyDataSetChanged();
             }
+            homePageRecyclerview.setAdapter(adapter);
 
         }else {
             Glide.with(this).load(R.drawable.nointernetconnection).into(noInternetConnection);
