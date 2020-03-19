@@ -41,11 +41,6 @@ public class MyWishlistFragment extends Fragment {
         wishlistRecyclerView.setLayoutManager(linearLayoutManager);
 
         List<WishlistModel> wishlistModelList = new ArrayList<>();
-        wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 1,"3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-        wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 0,"3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-        wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 2,"3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-        wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 4,"3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-        wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 1,"3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
 
         WishlistAdapter wishlistAdapter = new WishlistAdapter(wishlistModelList, true);
         wishlistRecyclerView.setAdapter(wishlistAdapter);

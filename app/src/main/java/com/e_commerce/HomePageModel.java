@@ -60,17 +60,41 @@ public class HomePageModel {
 
     //////////// strip ad
 
-    //////////horizontal product layout && grid product layout
-
     private String title;
     private List<HorizontalProductScrollModel> horizontalProductScrollModelList;
 
-    public HomePageModel(int type, String title,String backgroundColor, List<HorizontalProductScrollModel> horizontalProductScrollModelList) {
+    //////////horizontal product layout
+
+    private List<WishlistModel> viewAllProductList;
+
+    public HomePageModel(int type, String title,String backgroundColor, List<HorizontalProductScrollModel> horizontalProductScrollModelList, List<WishlistModel> viewAllProductList) {
+        this.type = type;
+        this.title = title;
+        this.backgroundColor = backgroundColor;
+        this.horizontalProductScrollModelList = horizontalProductScrollModelList;
+        this.viewAllProductList = viewAllProductList;
+    }
+
+    public List<WishlistModel> getViewAllProductList() {
+        return viewAllProductList;
+    }
+
+    public void setViewAllProductList(List<WishlistModel> viewAllProductList) {
+        this.viewAllProductList = viewAllProductList;
+    }
+
+    //////////horizontal product layout
+
+
+    //////////Grid product layout
+
+    public HomePageModel(int type, String title, String backgroundColor, List<HorizontalProductScrollModel> horizontalProductScrollModelList) {
         this.type = type;
         this.title = title;
         this.backgroundColor = backgroundColor;
         this.horizontalProductScrollModelList = horizontalProductScrollModelList;
     }
+    //////////Grid product layout
     public String getTitle() {
         return title;
     }
@@ -84,5 +108,5 @@ public class HomePageModel {
         this.horizontalProductScrollModelList = horizontalProductScrollModelList;
     }
 
-    //////////horizontal product layout && grid product layout
+
 }

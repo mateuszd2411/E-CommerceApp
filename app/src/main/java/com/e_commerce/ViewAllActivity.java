@@ -17,6 +17,7 @@ public class ViewAllActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private GridView gridView;
+    public static List<WishlistModel> wishlistModelList;
     public static List<HorizontalProductScrollModel> horizontalProductScrollModelList;
 
     @Override
@@ -40,17 +41,6 @@ public class ViewAllActivity extends AppCompatActivity {
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(layoutManager);
 
-            List<WishlistModel> wishlistModelList = new ArrayList<>();
-            wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 1, "3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 0, "3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 2, "3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 4, "3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 1, "3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 1, "3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 0, "3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 2, "3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 4, "3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.product_image, "Motorrola f75", 1, "3", 155, "499$ /-", "599$ /-", "Cash on Delivery"));
 
             WishlistAdapter adapter = new WishlistAdapter(wishlistModelList, false);
             recyclerView.setAdapter(adapter);
