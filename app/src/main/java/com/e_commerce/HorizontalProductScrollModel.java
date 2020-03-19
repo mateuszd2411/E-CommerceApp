@@ -2,25 +2,34 @@ package com.e_commerce;
 
 public class HorizontalProductScrollModel {
 
-    private int produceImage;
+    private String productID;
+    private String produceImage;
     private String productTitle;
     private String productDescription;
     private String productPrice;
 
-
-    public HorizontalProductScrollModel(int produceImage, String productTitle, String productDescription, String productPrice) {
+    public HorizontalProductScrollModel(String productID, String produceImage, String productTitle, String productDescription, String productPrice) {
+        this.productID = productID;
         this.produceImage = produceImage;
         this.productTitle = productTitle;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
+
     }
 
+    public String getProductID() {
+        return productID;
+    }
 
-    public int getProduceImage() {
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
+    public String getProduceImage() {
         return produceImage;
     }
 
-    public void setProduceImage(int produceImage) {
+    public void setProduceImage(String produceImage) {
         this.produceImage = produceImage;
     }
 

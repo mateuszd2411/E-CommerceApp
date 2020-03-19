@@ -2,7 +2,9 @@ package com.e_commerce;
 
 import android.content.Intent;
 import android.content.pm.LabeledIntent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.gridlayout.widget.GridLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -81,6 +84,7 @@ public class HomePageAdapter extends RecyclerView.Adapter {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         switch (homePageModelList.get(position).getType()){
@@ -95,9 +99,10 @@ public class HomePageAdapter extends RecyclerView.Adapter {
                    ((StripAdBannerViewholder)viewHolder).setStripAd(resource,color);
                 break;
             case HomePageModel.HORIZONTAL_PRODUCT_VIEW:
+                String layoutcolor = homePageModelList.get(position).getBackgroundColor();
                 String horizonyalLayoutTitle = homePageModelList.get(position).getTitle();
                 List<HorizontalProductScrollModel> horizontalProductScrollModelList = homePageModelList.get(position).getHorizontalProductScrollModelList();
-                ((HorizontalProductViewholder)viewHolder).setHorizontalProductLayout(horizontalProductScrollModelList,horizonyalLayoutTitle);
+                ((HorizontalProductViewholder)viewHolder).setHorizontalProductLayout(horizontalProductScrollModelList,horizonyalLayoutTitle,layoutcolor);
                 break;
             case HomePageModel.GRID_PRODUCT_VIEW:
                 String GridLayoutTitle = homePageModelList.get(position).getTitle();
@@ -235,18 +240,22 @@ public class HomePageAdapter extends RecyclerView.Adapter {
 
     public class HorizontalProductViewholder extends RecyclerView.ViewHolder{
 
+        private ConstraintLayout container;
         private TextView horizontalLayoutTitle;
         private Button horizontalViewAllBtn;
         private RecyclerView horizontalRecyclerView;
 
         public HorizontalProductViewholder(@NonNull View itemView) {
             super(itemView);
+            container = itemView.findViewById(R.id.container);
             horizontalLayoutTitle = itemView.findViewById(R.id.horizontal_layaoy_scroll_title);
             horizontalViewAllBtn = itemView.findViewById(R.id.horizontal_scroll_viev_all_btn);
             horizontalRecyclerView = itemView.findViewById(R.id.horizontal_scroll_recyclerView);
             horizontalRecyclerView.setRecycledViewPool(recycledViewPool);
         }
-        private void setHorizontalProductLayout(List<HorizontalProductScrollModel> horizontalProductScrollModelList, String title){
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        private void setHorizontalProductLayout(List<HorizontalProductScrollModel> horizontalProductScrollModelList, String title, String color){
+            container.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(color)));
             horizontalLayoutTitle.setText(title);
             if (horizontalProductScrollModelList.size() > 8){
                 horizontalViewAllBtn.setVisibility(View.VISIBLE);
@@ -291,7 +300,7 @@ public class HomePageAdapter extends RecyclerView.Adapter {
                 TextView productDescription = gridProductLayout.getChildAt(x).findViewById(R.id.h_s_product_description);
                 TextView productPrice = gridProductLayout.getChildAt(x).findViewById(R.id.h_s_product_price);
 
-                productImage.setImageResource(horizontalProductScrollModelList.get(x).getProduceImage());
+//                Glide.with(itemView.getContext()).load(horizontalProductScrollModelList.get(""))
                 productTitle.setText(horizontalProductScrollModelList.get(x).getProductTitle());
                 productDescription.setText(horizontalProductScrollModelList.get(x).getProductDescription());
                 productPrice.setText(horizontalProductScrollModelList.get(x).getProductPrice());
