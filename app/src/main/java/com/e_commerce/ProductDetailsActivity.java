@@ -62,10 +62,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private TabLayout productDetailsTablayout;
     private TextView produtOnlyDescriptionBody;
 
-    public static List<ProductSpecificationModel> productSpecificationModelList = new ArrayList<>();
-    public static String productDescription;
-    public static String productOtherDetails;
-    public static int tabPosition = -1;
+    private List<ProductSpecificationModel> productSpecificationModelList = new ArrayList<>();
+    private String productDescription;
+    private String productOtherDetails;
+
     ///product description
 
     /////////rating layout
@@ -74,6 +74,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private LinearLayout ratingsNoContainer;
     private TextView totalRatingsFigure;
     private LinearLayout ratingsProgressBarContainer;
+    private TextView averageRating;
     /////////rating layout
 
     private Button buyNowBtn;
@@ -124,6 +125,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ratingsNoContainer = findViewById(R.id.ratings_numbers_conteiner);
         totalRatingsFigure = findViewById(R.id.total_ratings_figure);
         ratingsProgressBarContainer = findViewById(R.id.ratings_progressbar_conteiner);
+        averageRating = findViewById(R.id.average_rating);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -166,8 +168,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                         for (long x =1;x<(long)documentSnapshot.get("total_spec_titles")+1;x++){
                             productSpecificationModelList.add(new ProductSpecificationModel(0,documentSnapshot.get("spec_title_"+x).toString()));
-                            for (long y = 1;y< (long)documentSnapshot.get("spec_title_4_total_fileds")+1;y++){
-                                productSpecificationModelList.add(new ProductSpecificationModel(1,documentSnapshot.get("spec_title_"+1+"_field_"+1+"_name").toString(),documentSnapshot.get("spec_title_"+1+"_field_"+1+"_value").toString()));
+                            for (long y = 1;y< (long)documentSnapshot.get("spec_title_"+x+"_total_fileds")+1;y++){
+                                productSpecificationModelList.add(new ProductSpecificationModel(1,documentSnapshot.get("spec_title_"+x+"_field_"+y+"_name").toString(),documentSnapshot.get("spec_title_"+x+"_field_"+y+"_value").toString()));
                             }
                         }
 
@@ -180,16 +182,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                     totalRatings.setText((long)documentSnapshot.get("total_ratings")+" ratings");
 
-                    for (int x =1;x <6;x++){
+                    for (int x =0;x <5;x++){
                         TextView rating = (TextView) ratingsNoContainer.getChildAt(x);
-                        rating.setText(String.valueOf((long)documentSnapshot.get((6-x)+"_star")));
+                        rating.setText(String.valueOf((long)documentSnapshot.get((5-x)+"_star")));
 
                         ProgressBar progressBar = (ProgressBar) ratingsProgressBarContainer.getChildAt(x);
                         int maxProgress = Integer.parseInt(String.valueOf((long)documentSnapshot.get("total_ratings")));
                         progressBar.setMax(maxProgress);
-                        progressBar.setProgress(Integer.parseInt(String.valueOf((long)documentSnapshot.get((6-x)+"_star"))));
+                        progressBar.setProgress(Integer.parseInt(String.valueOf((long)documentSnapshot.get((5-x)+"_star"))));
                     }
                     totalRatingsFigure.setText(String.valueOf((long)documentSnapshot.get("total_ratings")));
+                    averageRating.setText(documentSnapshot.get("avarage_rating").toString());
+                    productDetailsViewpager.setAdapter(new ProductDetailsAdapter(getSupportFragmentManager(), productDetailsTablayout.getTabCount(),productDescription,productOtherDetails,productSpecificationModelList));
 
 
 
@@ -219,13 +223,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
-        productDetailsViewpager.setAdapter(new ProductDetailsAdapter(getSupportFragmentManager(), productDetailsTablayout.getTabCount()));
 
         productDetailsViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(productDetailsTablayout));
         productDetailsTablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                tabPosition = tab.getPosition();
                 productDetailsViewpager.setCurrentItem(tab.getPosition());
             }
 

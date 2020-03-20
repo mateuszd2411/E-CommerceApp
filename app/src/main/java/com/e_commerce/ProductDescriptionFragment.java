@@ -10,9 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import static com.e_commerce.ProductDetailsActivity.productDescription;
-import static com.e_commerce.ProductDetailsActivity.productOtherDetails;
-import static com.e_commerce.ProductDetailsActivity.tabPosition;
 
 
 /**
@@ -26,7 +23,7 @@ public class ProductDescriptionFragment extends Fragment {
     }
 
     private TextView descriptionBody;
-
+    public String body;
 
 
     @Override
@@ -35,11 +32,7 @@ public class ProductDescriptionFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_description, container, false);
         descriptionBody = view.findViewById(R.id.tv_product_description);
-        if (tabPosition == 0){
-            descriptionBody.setText(productDescription);
-        }else {
-            descriptionBody.setText(productOtherDetails);
-        }
+        descriptionBody.setText(body);
         return view;
     }
 
