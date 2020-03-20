@@ -22,10 +22,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 import java.util.ArrayList;
@@ -36,8 +40,18 @@ import static com.e_commerce.MainActivity.showCart;
 public class ProductDetailsActivity extends AppCompatActivity {
 
     private ViewPager productImagesViewPager;
+    private TextView productTitle;
+    private TextView averageRatingMiniView;
+    private TextView totalRatingsMiniView;
+    private TextView productPrice;
+    private TextView cuttedPrice;
+    private TextView tvCodIndicator;
+    private ImageView codIndicator;
     private TabLayout viewpagerIdnicator;
     private Button coupenRedeemBtn;
+
+    private TextView rewardTitle;
+    private TextView rewardBody;
 
     ////coupendialog
 
@@ -62,6 +76,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private static boolean ALREADY_ADDED_TO_WISHLIST = false;
     private FloatingActionButton addToWishlistBtn;
 
+    private FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +94,62 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDetailsTablayout = findViewById(R.id.product_details_tablayout);
         buyNowBtn = findViewById(R.id.buy_now_btn);
         coupenRedeemBtn = findViewById(R.id.coupen_redemption_btn);
+        productTitle = findViewById(R.id.product_title);
+        averageRatingMiniView = findViewById(R.id.tv_product_rating_miniview);
+        totalRatingsMiniView = findViewById(R.id.total_ratings_miniview);
+        productPrice = findViewById(R.id.product_price);
+        cuttedPrice = findViewById(R.id.cutted_price);
+        tvCodIndicator = findViewById(R.id.tv_cod_indicator);
+        codIndicator = findViewById(R.id.cod_indicator_imageview);
+        rewardTitle = findViewById(R.id.reward_title);
+        rewardBody = findViewById(R.id.reward_body);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        final List<String> productImages = new ArrayList<>();
+
+        firebaseFirestore.collection("PRODUCTS").document("HXXLLcMRlmOaNUaIeZ3M")
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+
+                    for (long x = 1; x< (long)documentSnapshot.get("no_of_product_images") + 1;x++){
+                        productImages.add(documentSnapshot.get("product_image_"+x).toString());
+                    }
+                    ProductImagesAdapter productImagesAdapter = new ProductImagesAdapter(productImages);
+                    productImagesViewPager.setAdapter(productImagesAdapter);
+
+                    productTitle.setText(documentSnapshot.get("product_title").toString());
+                    averageRatingMiniView.setText(documentSnapshot.get("avarage_rating").toString());
+                    totalRatingsMiniView.setText("("+(long)documentSnapshot.get("total_ratings")+")ratings");
+                    productPrice.setText("$ "+documentSnapshot.get("product_price").toString()+"/-");
+                    cuttedPrice.setText("$ "+documentSnapshot.get("cutted_price").toString()+"/-");
+                    if ((boolean)documentSnapshot.get("COD")){
+                        codIndicator.setVisibility(View.VISIBLE);
+                        tvCodIndicator.setVisibility(View.VISIBLE);
+                    }else {
+                        codIndicator.setVisibility(View.INVISIBLE);
+                        tvCodIndicator.setVisibility(View.INVISIBLE);
+                    }
+                    rewardTitle.setText((long)documentSnapshot.get("free_coupens") + " " +documentSnapshot.get("free_coupen_title").toString());
+                    rewardBody.setText(documentSnapshot.get("free_coupen_body").toString());
+
+                    if ((boolean)documentSnapshot.get("use_tab_layout")){
+
+                    }
 
 
-        List<Integer> productImages = new ArrayList<>();
-        productImages.add(R.drawable.food);
-        productImages.add(R.drawable.garden);
-        productImages.add(R.drawable.car);
-        productImages.add(R.drawable.bath);
+                }else {
+                    String error = task.getException().getMessage();
+                    Toast.makeText(ProductDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-        ProductImagesAdapter productImagesAdapter = new ProductImagesAdapter(productImages);
-        productImagesViewPager.setAdapter(productImagesAdapter);
+
+
 
         viewpagerIdnicator.setupWithViewPager(productImagesViewPager, true);
 
