@@ -214,6 +214,7 @@ public class HomeFragment extends Fragment {
             loadFragmentdata(homePageRecyclerview,getContext(),0,"Home");
 
         }else {
+            Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_SHORT).show();
             categoryRecyclerView.setVisibility(View.GONE);
             homePageRecyclerview.setVisibility(View.GONE);
             Glide.with(getContext()).load(R.drawable.nointernetconnection).into(noInternetConnection);
