@@ -91,24 +91,25 @@ public class HomeFragment extends Fragment {
 
         ///category fake list
         categoryModeFakelList.add(new CategoryModel("null",""));
-        categoryModeFakelList.add(new CategoryModel("null",""));
-        categoryModeFakelList.add(new CategoryModel("null",""));
-        categoryModeFakelList.add(new CategoryModel("null",""));
-        categoryModeFakelList.add(new CategoryModel("null",""));
-        categoryModeFakelList.add(new CategoryModel("null",""));
-        categoryModeFakelList.add(new CategoryModel("null",""));
-        categoryModeFakelList.add(new CategoryModel("null",""));
-        categoryModeFakelList.add(new CategoryModel("null",""));
-        categoryModeFakelList.add(new CategoryModel("null",""));
+        categoryModeFakelList.add(new CategoryModel("",""));
+        categoryModeFakelList.add(new CategoryModel("",""));
+        categoryModeFakelList.add(new CategoryModel("",""));
+        categoryModeFakelList.add(new CategoryModel("",""));
+        categoryModeFakelList.add(new CategoryModel("",""));
+        categoryModeFakelList.add(new CategoryModel("",""));
+        categoryModeFakelList.add(new CategoryModel("",""));
+        categoryModeFakelList.add(new CategoryModel("",""));
+        categoryModeFakelList.add(new CategoryModel("",""));
+
         ///category fake list
 
         ///home page fake list
         List<SliderModel> sliderModelFakeList = new ArrayList<>();
-        sliderModelFakeList.add(new SliderModel("null","#ffffff"));
-        sliderModelFakeList.add(new SliderModel("null","#ffffff"));
-        sliderModelFakeList.add(new SliderModel("null","#ffffff"));
-        sliderModelFakeList.add(new SliderModel("null","#ffffff"));
-        sliderModelFakeList.add(new SliderModel("null","#ffffff"));
+        sliderModelFakeList.add(new SliderModel("null","#dfdfdf"));
+        sliderModelFakeList.add(new SliderModel("null","#dfdfdf"));
+        sliderModelFakeList.add(new SliderModel("null","#dfdfdf"));
+        sliderModelFakeList.add(new SliderModel("null","#dfdfdf"));
+        sliderModelFakeList.add(new SliderModel("null","#dfdfdf"));
 
 
         List<HorizontalProductScrollModel> horizontalProductScrollModelFakeList = new ArrayList<>();
@@ -121,16 +122,14 @@ public class HomeFragment extends Fragment {
         horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("","","","",""));
 
         homePageModelFakeList.add(new HomePageModel(0,sliderModelFakeList));
-        homePageModelFakeList.add(new HomePageModel(1,"","#ffffff"));
-        homePageModelFakeList.add(new HomePageModel(2,"","#ffffff",horizontalProductScrollModelFakeList, new ArrayList<WishlistModel>()));
-        homePageModelFakeList.add(new HomePageModel(3,"","#ffffff",horizontalProductScrollModelFakeList));
+        homePageModelFakeList.add(new HomePageModel(1,"","#dfdfdf"));
+        homePageModelFakeList.add(new HomePageModel(2,"","#dfdfdf",horizontalProductScrollModelFakeList, new ArrayList<WishlistModel>()));
+        homePageModelFakeList.add(new HomePageModel(3,"","#dfdfdf",horizontalProductScrollModelFakeList));
         ///home page fake list
 
         categoryAdapter = new CategoryAdapter(categoryModeFakelList);
-        categoryRecyclerView.setAdapter(categoryAdapter);
 
         adapter = new HomePageAdapter(homePageModelFakeList);
-        homePageRecyclerview.setAdapter(adapter);
 
         connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -140,9 +139,11 @@ public class HomeFragment extends Fragment {
             if (categoryModelList.size() == 0){
                 loadCategories(categoryRecyclerView,getContext());
             }else {
+                categoryAdapter = new CategoryAdapter(categoryModelList);
                 categoryAdapter.notifyDataSetChanged();
             }
 
+            categoryRecyclerView.setAdapter(categoryAdapter);
             if (lists.size() == 0){
                 loadedCategoriesNames.add("HOME");
                 lists.add(new ArrayList<HomePageModel>());
@@ -152,7 +153,7 @@ public class HomeFragment extends Fragment {
                 adapter = new HomePageAdapter(lists.get(0));
                 adapter.notifyDataSetChanged();
             }
-
+            homePageRecyclerview.setAdapter(adapter);
 
         }else {
             Glide.with(this).load(R.drawable.nointernetconnection).into(noInternetConnection);
@@ -173,6 +174,8 @@ public class HomeFragment extends Fragment {
                 loadedCategoriesNames.clear();
                 if (networkInfo != null && networkInfo.isConnected() == true){
                     noInternetConnection.setVisibility(View.GONE);
+                    categoryAdapter = new CategoryAdapter(categoryModeFakelList);
+                    adapter = new HomePageAdapter(homePageModelFakeList);
                     categoryRecyclerView.setAdapter(categoryAdapter);
                     homePageRecyclerview.setAdapter(adapter);
 
