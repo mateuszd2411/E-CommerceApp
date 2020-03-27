@@ -32,6 +32,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -46,7 +48,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import static com.e_commerce.DBqueries.currentUser;
+
 import static com.e_commerce.RegisterActivity.setSignUpFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -68,7 +70,9 @@ public class MainActivity extends AppCompatActivity
     private Window window;
     private Toolbar toolbar;
     private Dialog signInDialog;
+    private FirebaseUser currentUser;
 
+    public static DrawerLayout drawer;
 
 
     @SuppressLint("WrongConstant")
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -103,11 +107,7 @@ public class MainActivity extends AppCompatActivity
             setFragment(new HomeFragment(), HOME_FRAGMENT);
         }
 
-        if (currentUser == null){
-            navigationView.getMenu().getItem(navigationView.getMenu().size() - 1).setEnabled(false);
-        }else {
-            navigationView.getMenu().getItem(navigationView.getMenu().size() - 1).setEnabled(true);
-        }
+
 
         signInDialog = new Dialog(MainActivity.this);
         signInDialog.setContentView(R.layout.sign_in_dialog);
@@ -141,6 +141,17 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null){
+            navigationView.getMenu().getItem(navigationView.getMenu().size() - 1).setEnabled(false);
+        }else {
+            navigationView.getMenu().getItem(navigationView.getMenu().size() - 1).setEnabled(true);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -242,7 +253,10 @@ public class MainActivity extends AppCompatActivity
             } else if (id == R.id.nav_account) {
                 gotoFragment("My Account", new MyAccountFragment(), ACCOUNT_FRAGMENT);
             } else if (id == R.id.nav_sign_out) {
-
+                FirebaseAuth.getInstance().signOut();
+                Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(registerIntent);
+                finish();
             }
             drawer.closeDrawer(GravityCompat.START);
             return true;

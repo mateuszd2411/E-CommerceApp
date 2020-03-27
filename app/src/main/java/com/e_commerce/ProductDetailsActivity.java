@@ -30,6 +30,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -37,7 +39,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.e_commerce.DBqueries.currentUser;
 import static com.e_commerce.MainActivity.showCart;
 import static com.e_commerce.RegisterActivity.setSignUpFragment;
 
@@ -97,6 +98,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ////coupendialog
 
     private Dialog signInDialog;
+    private FirebaseUser currentUser;
 
 
     @Override
@@ -139,7 +141,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         final List<String> productImages = new ArrayList<>();
 
-        firebaseFirestore.collection("PRODUCTS").document("HXXLLcMRlmOaNUaIeZ3M")
+        firebaseFirestore.collection("PRODUCTS").document(getIntent().getStringExtra("PRODUCT_ID"))
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -387,10 +389,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         ///sign dialog
 
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null){
             coupenRedemptionLayout.setVisibility(View.GONE);
+        }else {
+            coupenRedemptionLayout.setVisibility(View.VISIBLE);
         }
-
     }
 
     public static void showDialogRecyclerview(){

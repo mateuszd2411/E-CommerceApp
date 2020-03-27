@@ -1,6 +1,7 @@
 package com.e_commerce;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -69,6 +70,7 @@ public class HomeFragment extends Fragment {
     private ImageView noInternetConnection;
     private Button retryBtn;
 
+    @SuppressLint("WrongConstant")
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -136,6 +138,7 @@ public class HomeFragment extends Fragment {
         connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected() == true){
+            MainActivity.drawer.setDrawerLockMode(0);
             noInternetConnection.setVisibility(View.GONE);
             retryBtn.setVisibility(View.GONE);
             categoryRecyclerView.setVisibility(View.VISIBLE);
@@ -161,6 +164,7 @@ public class HomeFragment extends Fragment {
             homePageRecyclerview.setAdapter(adapter);
 
         }else {
+            MainActivity.drawer.setDrawerLockMode(1);
             categoryRecyclerView.setVisibility(View.GONE);
             homePageRecyclerview.setVisibility(View.GONE);
             Glide.with(this).load(R.drawable.nointernetconnection).into(noInternetConnection);
@@ -191,12 +195,14 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("WrongConstant")
     private void reloadPage(){
         networkInfo = connectivityManager.getActiveNetworkInfo();
         categoryModelList.clear();
         lists.clear();
         loadedCategoriesNames.clear();
         if (networkInfo != null && networkInfo.isConnected() == true){
+            MainActivity.drawer.setDrawerLockMode(0);
             noInternetConnection.setVisibility(View.GONE);
             retryBtn.setVisibility(View.GONE);
             categoryRecyclerView.setVisibility(View.VISIBLE);
@@ -214,6 +220,7 @@ public class HomeFragment extends Fragment {
             loadFragmentdata(homePageRecyclerview,getContext(),0,"Home");
 
         }else {
+            MainActivity.drawer.setDrawerLockMode(1);
             Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_SHORT).show();
             categoryRecyclerView.setVisibility(View.GONE);
             homePageRecyclerview.setVisibility(View.GONE);
