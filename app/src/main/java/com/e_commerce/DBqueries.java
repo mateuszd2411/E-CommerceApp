@@ -212,7 +212,7 @@ public class DBqueries {
                     String error = task.getException().getMessage();
                     Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
                 }
-                ProductDetailsActivity.addToWishlistBtn.setEnabled(true);
+                ProductDetailsActivity.addToWishlistBtn.setEnabled(true);////////
             }
         });
 

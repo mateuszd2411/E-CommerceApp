@@ -174,7 +174,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     productImagesViewPager.setAdapter(productImagesAdapter);
 
                     productTitle.setText(documentSnapshot.get("product_title").toString());
-                    averageRatingMiniView.setText(documentSnapshot.get("avarage_rating").toString());
+                    averageRatingMiniView.setText(documentSnapshot.get("average_rating").toString());
                     totalRatingsMiniView.setText("("+(long)documentSnapshot.get("total_ratings")+")ratings");
                     productPrice.setText("$ "+documentSnapshot.get("product_price").toString()+"/-");
                     cuttedPrice.setText("$ "+documentSnapshot.get("cutted_price").toString()+"/-");
@@ -221,7 +221,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         progressBar.setProgress(Integer.parseInt(String.valueOf((long)documentSnapshot.get((5-x)+"_star"))));
                     }
                     totalRatingsFigure.setText(String.valueOf((long)documentSnapshot.get("total_ratings")));
-                    averageRating.setText(documentSnapshot.get("avarage_rating").toString());
+                    averageRating.setText(documentSnapshot.get("average_rating").toString());
                     productDetailsViewpager.setAdapter(new ProductDetailsAdapter(getSupportFragmentManager(), productDetailsTablayout.getTabCount(),productDescription,productOtherDetails,productSpecificationModelList));
 
                     if (currentUser != null) {

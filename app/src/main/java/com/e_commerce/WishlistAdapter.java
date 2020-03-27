@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
 
     private List<WishlistModel> wishlistModelList;
     private Boolean wishlist;
+    private int lastPosition = -1;
 
     public WishlistAdapter(List<WishlistModel> wishlistModelList, Boolean wishlist) {
         this.wishlistModelList = wishlistModelList;
@@ -45,7 +48,13 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
         String productPrice = wishlistModelList.get(position).getProductPrice();
         String cuttedPrice = wishlistModelList.get(position).getCuttedPrice();
         boolean paymentMethod = wishlistModelList.get(position).isCOD();
-        viewHolder.setData(resource, title, freeCoupens, rating, totalRatings, productPrice, cuttedPrice, paymentMethod);
+        viewHolder.setData(resource, title, freeCoupens, rating, totalRatings, productPrice, cuttedPrice, paymentMethod, position);
+
+        if (lastPosition < position) {
+            Animation animation = AnimationUtils.loadAnimation(viewHolder.itemView.getContext(), R.anim.fade_in);
+            viewHolder.itemView.setAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     @Override
@@ -81,8 +90,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             paymentMethod = itemView.findViewById(R.id.payment_method);
             deleteBtn = itemView.findViewById(R.id.delete_btn);
         }
-        private void setData(String resource, String title, long freeCoupensNo, String averageRate, long totalRatingsNo, String price, String cuttedPriceValue, boolean COD){
-            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.home)).into(productImage);
+        private void setData(String resource, String title, long freeCoupensNo, String averageRate, long totalRatingsNo, String price, String cuttedPriceValue, boolean COD, final int index){
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.nophoto)).into(productImage);
             productTitle.setText(title);
             if (freeCoupensNo != 0){
                 coupenIcon.setVisibility(View.VISIBLE);
@@ -115,7 +124,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(itemView.getContext(), "delete", Toast.LENGTH_SHORT).show();
+                    deleteBtn.setEnabled(false);
+                    DBqueries.removeFromWishlist(index,itemView.getContext());
                 }
             });
 
