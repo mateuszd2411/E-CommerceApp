@@ -102,7 +102,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private Dialog signInDialog;
     private Dialog loadingDialog;
     private FirebaseUser currentUser;
-    private String productID;
+    public static String productID;
 
     private DocumentSnapshot documentSnapshot;
 
@@ -239,6 +239,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         addToWishlistBtn.setSupportImageTintList(getResources().getColorStateList(R.color.colorPrimary));
                     }else {
                         ALREADY_ADDED_TO_WISHLIST = false;
+                        addToWishlistBtn.setSupportImageTintList(ColorStateList.valueOf(Color.parseColor("#9e9e9e")));
                     }
 
                 }else {
@@ -272,7 +273,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         addProduct.put("product_ID_"+String.valueOf(DBqueries.wishList.size()), productID);
 
                         firebaseFirestore.collection("USERS").document(currentUser.getUid()).collection("USER_DATA").document("MY_WISHLIST")
-                                .set(addProduct).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                .update(addProduct).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()){
@@ -504,6 +505,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             ALREADY_ADDED_TO_WISHLIST = true;
             addToWishlistBtn.setSupportImageTintList(getResources().getColorStateList(R.color.colorPrimary));
         }else {
+            addToWishlistBtn.setSupportImageTintList(ColorStateList.valueOf(Color.parseColor("#9e9e9e")));
             ALREADY_ADDED_TO_WISHLIST = false;
         }
 

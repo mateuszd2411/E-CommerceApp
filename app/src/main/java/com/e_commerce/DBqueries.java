@@ -2,6 +2,8 @@ package com.e_commerce;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -148,6 +150,17 @@ public class DBqueries {
                 if (task.isSuccessful()){
                     for (long x = 0;x< (long)task.getResult().get("list_size");x++){
                         wishList.add(task.getResult().get("product_ID_"+x).toString());
+                        if (DBqueries.wishList.contains(ProductDetailsActivity.productID)){
+                            ProductDetailsActivity.ALREADY_ADDED_TO_WISHLIST = true;
+                            if (ProductDetailsActivity.addToWishlistBtn != null){
+                                ProductDetailsActivity.addToWishlistBtn.setSupportImageTintList(context.getResources().getColorStateList(R.color.colorPrimary));
+                            }
+                        }else {
+                            if (ProductDetailsActivity.addToWishlistBtn != null){
+                                ProductDetailsActivity.addToWishlistBtn.setSupportImageTintList(ColorStateList.valueOf(Color.parseColor("#9e9e9e")));
+                            }
+                            ProductDetailsActivity.ALREADY_ADDED_TO_WISHLIST = false;
+                        }
 
                         if (loadProductData) {
                             firebaseFirestore.collection("PRODUCTS").document(task.getResult().get("product_ID_" + x).toString())
@@ -164,6 +177,7 @@ public class DBqueries {
                                                 , task.getResult().get("product_price").toString()
                                                 , task.getResult().get("cutted_price").toString()
                                                 , (boolean) task.getResult().get("COD")));
+
                                         MyWishlistFragment.wishlistAdapter.notifyDataSetChanged();
 
                                     } else {
@@ -208,15 +222,27 @@ public class DBqueries {
                     ProductDetailsActivity.ALREADY_ADDED_TO_WISHLIST = false;
                     Toast.makeText(context, "Removed successfully!", Toast.LENGTH_SHORT).show();
                 }else {
-                    ProductDetailsActivity.addToWishlistBtn.setSupportImageTintList(context.getResources().getColorStateList(R.color.colorPrimary));
+                    if (ProductDetailsActivity.addToWishlistBtn != null){
+                        ProductDetailsActivity.addToWishlistBtn.setSupportImageTintList(context.getResources().getColorStateList(R.color.colorPrimary));
+                    }
                     String error = task.getException().getMessage();
                     Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
                 }
-                ProductDetailsActivity.addToWishlistBtn.setEnabled(true);////////
+                if (ProductDetailsActivity.addToWishlistBtn != null){
+                    ProductDetailsActivity.addToWishlistBtn.setEnabled(true);
+                }
             }
         });
 
 
+    }
+
+    public static  void clearData(){
+        categoryModelList.clear();
+        lists.clear();
+        loadedCategoriesNames.clear();
+        wishList.clear();
+        wishlistModelList.clear();
     }
 
 
