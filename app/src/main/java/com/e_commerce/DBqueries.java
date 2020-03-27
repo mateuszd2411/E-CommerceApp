@@ -1,5 +1,6 @@
 package com.e_commerce;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -134,7 +135,7 @@ public class DBqueries {
 
     }
 
-    public static void loadWishList(final Context context){
+    public static void loadWishList(final Context context, final Dialog dialog){
 
         firebaseFirestore.collection("USERS").document(FirebaseAuth.getInstance().getUid()).collection("USER_DATA").document("MY_WISHLIST")
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -149,6 +150,7 @@ public class DBqueries {
                     String error = task.getException().getMessage();
                     Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
                 }
+                dialog.dismiss();
             }
         });
 
