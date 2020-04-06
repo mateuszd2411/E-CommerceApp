@@ -351,7 +351,9 @@ public class DBqueries {
                         cartItemModelList.remove(index);
                         MyCartFragment.cartAdapter.notifyDataSetChanged();
                     }
-                    ProductDetailsActivity.ALREADY_ADDED_TO_CART = false;
+                    if (ProductDetailsActivity.cartItem != null){
+                        ProductDetailsActivity.cartItem.setActionView(null);
+                    }
                     Toast.makeText(context, "Removed successfully!", Toast.LENGTH_SHORT).show();
                 }else {
                     cartList.add(index,removedProductId);
