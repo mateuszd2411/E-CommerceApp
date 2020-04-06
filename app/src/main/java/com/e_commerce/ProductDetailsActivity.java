@@ -91,6 +91,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private LinearLayout addToCartBtn;
 
     public static boolean ALREADY_ADDED_TO_WISHLIST = false;
+    public static boolean ALREADY_ADDED_TO_CART = false;
     public static FloatingActionButton addToWishlistBtn;
 
     private FirebaseFirestore firebaseFirestore;
