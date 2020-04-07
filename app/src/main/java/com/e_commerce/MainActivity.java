@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private Dialog signInDialog;
     private FirebaseUser currentUser;
+    private TextView badgeCount;
 
     public static DrawerLayout drawer;
 
@@ -187,32 +188,36 @@ public class MainActivity extends AppCompatActivity
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getMenuInflater().inflate(R.menu.main, menu);
 
-            MenuItem cartItem = menu.findItem(R.id.main_cart_icon);
-            if (DBqueries.cartList.size() > 0){
-                cartItem.setActionView(R.layout.badge_layout);
-                ImageView badgeIcon = cartItem.getActionView().findViewById(R.id.badge_icon);
-                badgeIcon.setImageResource(R.drawable.cart_white);
-                TextView badgeCount = cartItem.getActionView().findViewById(R.id.badge_count);
-                if (DBqueries.cartList.size() < 99){
-                    badgeCount.setText(String.valueOf(DBqueries.cartList.size()));
+        MenuItem cartItem = menu.findItem(R.id.main_cart_icon);
+            cartItem.setActionView(R.layout.badge_layout);
+            ImageView badgeIcon = cartItem.getActionView().findViewById(R.id.badge_icon);
+            badgeIcon.setImageResource(R.drawable.cart_white);
+            badgeCount = cartItem.getActionView().findViewById(R.id.badge_count);
+            if (currentUser != null){
+                if (DBqueries.cartList.size() == 0){
+                    DBqueries.loadCartList(MainActivity.this,new Dialog(MainActivity.this),false,badgeCount);
                 }else {
-                    badgeCount.setText("99");
-                }
-
-                cartItem.getActionView().setOnClickListener(new View.OnClickListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                    @Override
-                    public void onClick(View view) {
-                        if (currentUser == null){
-                            signInDialog.show();
-                        }else {
-                            gotoFragment("My Cart", new MyCartFragment(), CART_FRAGMENT);
-                        }
+                    badgeCount.setVisibility(View.VISIBLE);
+                    if (DBqueries.cartList.size() < 99){
+                        badgeCount.setText(String.valueOf(DBqueries.cartList.size()));
+                    }else {
+                        badgeCount.setText("99");
                     }
-                });
-            }else {
-                cartItem.setActionView(null);
+                }
             }
+
+            cartItem.getActionView().setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onClick(View view) {
+                    if (currentUser == null){
+                        signInDialog.show();
+                    }else {
+                        gotoFragment("My Cart", new MyCartFragment(), CART_FRAGMENT);
+                    }
+                }
+            });
+
         }
         return true;
     }
