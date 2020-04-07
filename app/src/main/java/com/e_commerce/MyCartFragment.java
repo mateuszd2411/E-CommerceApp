@@ -35,6 +35,7 @@ public class MyCartFragment extends Fragment {
     private Button continueBtn;
     private Dialog loadingDialog;
     public static CartAdapter cartAdapter;
+    private TextView totalAmount;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -57,6 +58,7 @@ public class MyCartFragment extends Fragment {
 
         cartItemsRecyclerView = view.findViewById(R.id.cart_items_recyclerview);
         continueBtn = view.findViewById(R.id.cart_continue_btn);
+        totalAmount = view.findViewById(R.id.total_cart_amount);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -70,15 +72,15 @@ public class MyCartFragment extends Fragment {
             loadingDialog.dismiss();
         }
 
-        cartAdapter = new CartAdapter(DBqueries.cartItemModelList);
+        cartAdapter = new CartAdapter(DBqueries.cartItemModelList,totalAmount);
         cartItemsRecyclerView.setAdapter(cartAdapter);
         cartAdapter.notifyDataSetChanged();
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent deliveryIntent = new Intent(getContext(), AddAddressActivity.class);
-                getContext().startActivity(deliveryIntent);
+                loadingDialog.show();
+                DBqueries.loadAddresses(getContext(),loadingDialog);
             }
         });
 
