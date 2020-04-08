@@ -24,6 +24,9 @@ public class DeliveryActivity extends AppCompatActivity {
     private Button changeORaddNewAddressBtn;
     public static final int SELECT_ADDRESS = 0;
     private TextView totalAmount;
+    private TextView fullname;
+    private TextView fullAddress;
+    private TextView pincode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +42,15 @@ public class DeliveryActivity extends AppCompatActivity {
         deliveryRecyclerView = findViewById(R.id.delivery_recuclerview);
         changeORaddNewAddressBtn = findViewById(R.id.change_or_add_address_btn);
         totalAmount = findViewById(R.id.total_cart_amount);
-
+        fullname = findViewById(R.id.fullname);
+        fullAddress = findViewById(R.id.addresses_fullname);
+        pincode = findViewById(R.id.pincode);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         deliveryRecyclerView.setLayoutManager(layoutManager);
 
-        List<CartItemModel> cartItemModelList = new ArrayList<>();
-
-        CartAdapter cartAdapter = new CartAdapter(cartItemModelList,totalAmount);
+        CartAdapter cartAdapter = new CartAdapter(DBqueries.cartItemModelList,totalAmount, false);
         deliveryRecyclerView.setAdapter(cartAdapter);
         cartAdapter.notifyDataSetChanged();
 
@@ -60,6 +63,10 @@ public class DeliveryActivity extends AppCompatActivity {
                 startActivity(myAddressesIntent);
             }
         });
+
+        fullname.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getAddress());
+        fullAddress.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getAddress());
+        pincode.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getPincode());
 
     }
 

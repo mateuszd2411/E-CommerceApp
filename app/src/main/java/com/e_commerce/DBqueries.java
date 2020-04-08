@@ -284,7 +284,10 @@ public class DBqueries {
 
     public static void loadCartList(final Context context, final Dialog dialog, final boolean loadProductData, final TextView badgeCount){
         cartList.clear();
-        firebaseFirestore.collection("USERS").document(FirebaseAuth.getInstance().getUid()).collection("USER_DATA").document("MY_CART")
+        firebaseFirestore.collection("USERS")
+                .document(FirebaseAuth.getInstance().getUid())
+                .collection("USER_DATA")
+                .document("MY_CART")
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -317,7 +320,8 @@ public class DBqueries {
                                                 , task.getResult().get("cutted_price").toString()
                                                 , (long) 1
                                                 , (long) 0
-                                                , (long) 0));
+                                                , (long) 0
+                                        ));
 
                                         if (cartList.size() == 1){
                                             cartItemModelList.add(new CartItemModel(CartItemModel.TOTAL_AMOUNT));
@@ -403,6 +407,7 @@ public class DBqueries {
                     Intent deliveryIntent;
                     if ((long)task.getResult().get("list_size") == 0){
                         deliveryIntent = new Intent(context, AddAddressActivity.class);
+                        deliveryIntent.putExtra("INTENT","deliveryIntent");
                     }else {
                         for (long x = 1; x < (long)task.getResult().get("list_size"); x++){
                             addressModelList.add(new AddressModel(task.getResult().get("fullname_"+x).toString(),
