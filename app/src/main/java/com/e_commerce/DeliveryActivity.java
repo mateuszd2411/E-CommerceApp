@@ -28,6 +28,7 @@ public class DeliveryActivity extends AppCompatActivity {
     private TextView fullname;
     private TextView fullAddress;
     private TextView pincode;
+    private Button continueBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class DeliveryActivity extends AppCompatActivity {
         fullname = findViewById(R.id.fullname);
         fullAddress = findViewById(R.id.addresses_fullname);
         pincode = findViewById(R.id.pincode);
+        continueBtn = findViewById(R.id.cart_continue_btn);
+
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -62,6 +65,13 @@ public class DeliveryActivity extends AppCompatActivity {
                 Intent myAddressesIntent = new Intent(DeliveryActivity.this, MyAddressesActivity.class);
                 myAddressesIntent.putExtra("MODE",SELECT_ADDRESS);
                 startActivity(myAddressesIntent);
+            }
+        });
+
+        continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
