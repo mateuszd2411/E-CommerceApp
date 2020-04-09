@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity
     private Dialog signInDialog;
     private FirebaseUser currentUser;
     private TextView badgeCount;
+    private int scrollFlags;
+    private AppBarLayout.LayoutParams params;
 
     public static DrawerLayout drawer;
 
@@ -88,6 +91,9 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
+        scrollFlags = params.getScrollFlags();
 
         drawer = findViewById(R.id.drawer_layout);
 
@@ -262,6 +268,9 @@ public class MainActivity extends AppCompatActivity
         setFragment(fragment, fragmentNo);
         if (fragmentNo == CART_FRAGMENT){
             navigationView.getMenu().getItem(3).setCheckable(true);
+            params.setScrollFlags(0);
+        }else {
+            params.setScrollFlags(scrollFlags);
         }
     }
 

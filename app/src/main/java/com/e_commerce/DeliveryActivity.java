@@ -64,10 +64,16 @@ public class DeliveryActivity extends AppCompatActivity {
             }
         });
 
-        fullname.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getAddress());
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        fullname.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getFullname());
         fullAddress.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getAddress());
         pincode.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getPincode());
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
