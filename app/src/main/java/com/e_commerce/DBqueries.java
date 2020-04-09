@@ -321,7 +321,7 @@ public class DBqueries {
                                                 , (long) 1
                                                 , (long) 0
                                                 , (long) 0
-                                        ));
+                                                ,(boolean)task.getResult().get("in_stock")));
 
                                         if (cartList.size() == 1){
                                             cartItemModelList.add(new CartItemModel(CartItemModel.TOTAL_AMOUNT));
@@ -351,7 +351,6 @@ public class DBqueries {
                     }else {
                         badgeCount.setText("99");
                     }
-
                 }else {
                     String error = task.getException().getMessage();
                     Toast.makeText(context, error, Toast.LENGTH_SHORT).show();

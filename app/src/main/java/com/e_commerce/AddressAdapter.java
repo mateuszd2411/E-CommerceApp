@@ -25,6 +25,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Viewhold
     public AddressAdapter(List<AddressModel> addressModelList, int MODE) {
         this.addressModelList = addressModelList;
         this.MODE = MODE;
+        preSelectedPosition = DBqueries.selectedAddress;
     }
 
     @NonNull
@@ -87,8 +88,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Viewhold
                             addressModelList.get(preSelectedPosition).setSelected(false);
                             refreshItem(preSelectedPosition,position);
                             preSelectedPosition = position;
+                            DBqueries.selectedAddress = position;
                         }
-
                     }
                 });
 

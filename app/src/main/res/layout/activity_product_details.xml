@@ -93,6 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="BUY NOW"
+            android:visibility="visible"
             android:stateListAnimator="@null"
             android:background="@color/colorPrimary"
             android:textColor="@color/colorAccent"
