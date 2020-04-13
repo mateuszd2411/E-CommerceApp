@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -58,6 +59,9 @@ public class DeliveryActivity extends AppCompatActivity {
     private Dialog loadingDialog;
     private Dialog paymentMethodDialog;
     private ImageButton paytm;
+    private ConstraintLayout orderConfirmationLayout;
+    private ImageButton continueShoppingBtn;
+    private TextView orderID;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -78,6 +82,9 @@ public class DeliveryActivity extends AppCompatActivity {
         fullAddress = findViewById(R.id.addresses_fullname);
         pincode = findViewById(R.id.pincode);
         continueBtn = findViewById(R.id.cart_continue_btn);
+        orderConfirmationLayout = findViewById(R.id.order_confirmation_layout);
+        continueShoppingBtn = findViewById(R.id.comtinue_shopping_btn);
+        orderID = findViewById(R.id.order_id);
 
         ///loading dialog
 
@@ -188,44 +195,62 @@ public class DeliveryActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onTransactionResponse(Bundle inResponse) {
-                                        /*Display the message as below */
-                                        Toast.makeText(getApplicationContext(), "Payment Transaction response " + inResponse.toString(), Toast.LENGTH_LONG).show();
+//                                        Toast.makeText(getApplicationContext(), "Payment Transaction response " + inResponse.toString(), Toast.LENGTH_LONG).show();
+
+                                        if (inResponse.getString("STATUS").equals("TXN_SUCCESS")){
+
+                                            if (MainActivity.mainActivity !=null){
+                                                MainActivity.mainActivity.finish();
+                                                MainActivity.mainActivity = null;
+                                                MainActivity.showCart = false;
+                                            }
+
+                                            if (ProductDetailsActivity.productDetailsActivity !=null){
+                                                ProductDetailsActivity.productDetailsActivity.finish();
+                                                ProductDetailsActivity.productDetailsActivity = null;
+                                            }
+
+                                            orderID.setText("Order ID " +inResponse.getString("ORDERID"));
+                                            orderConfirmationLayout.setVisibility(View.VISIBLE);
+                                            continueShoppingBtn.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    finish();
+                                                }
+                                            });
+
+                                        }
+
                                     }
 
                                     @Override
                                     public void networkNotAvailable() {
-                                        /*Display the message as below */
                                         Toast.makeText(getApplicationContext(), "Network connection error: Check your internet connectivity", Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void clientAuthenticationFailed(String inErrorMessage) {
-                                        /*Display the message as below */
                                         Toast.makeText(getApplicationContext(), "Authentication failed: Server error" + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void someUIErrorOccurred(String inErrorMessage) {
-                                        /*Display the error message as below */
                                         Toast.makeText(getApplicationContext(), "UI Error " + inErrorMessage , Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void onErrorLoadingWebPage(int iniErrorCode, String inErrorMessage, String inFailingUrl) {
-                                        /*Display the message as below */
                                         Toast.makeText(getApplicationContext(), "Unable to load webpage " + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
 
                                     }
 
                                     @Override
                                     public void onBackPressedCancelTransaction() {
-                                        /*Display the message as below */
                                         Toast.makeText(getApplicationContext(), "Transaction cancelled" , Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void onTransactionCancel(String inErrorMessage, Bundle inResponse) {
-                                        /*Display the message as below */
                                         Toast.makeText(getApplicationContext(), "Transaction Cancelled " + inResponse.toString(), Toast.LENGTH_LONG).show();
                                     }
                                 });
