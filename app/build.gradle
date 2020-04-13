@@ -61,4 +61,11 @@ dependencies {
     implementation fileTree(dir: 'C:\\Users\\szef\\AndroidStudioProjects\\ECommerce\\app\\libs', include: ['*.aar', '*.jar'], exclude: [])
     implementation files('C:\\Users\\szef\\AndroidStudioProjects\\ECommerce\\app\\libs\\Gradle__com_android_support_appcompat_v7_28_0_0_aar')
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
+
+
+    implementation('com.paytm:pgplussdk:1.4.4') {
+        transitive = true
+    }
+    implementation 'com.android.volley:volley:1.1.1'
+
 }
