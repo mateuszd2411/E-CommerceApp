@@ -130,19 +130,24 @@ public class DeliveryActivity extends AppCompatActivity {
 
         paytm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 paymentMethodDialog.dismiss();
                 loadingDialog.show();
                 if (ContextCompat.checkSelfPermission(DeliveryActivity.this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(DeliveryActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, 101);
                 }
 
-                final String M_id = "YlutwW8409962366406";
-                final String customer_id = FirebaseAuth.getInstance().getUid();
-                final String order_id = UUID.randomUUID().toString().substring(0,28);
-                String url = "https://hesperian-documents.000webhostapp.com/paytm/generatedChecksum.php";
-                final String callBackUrl = "https://pguat.patm.com/paytmchecksum/paytmCallback.jsp";
+                /////////////////////////////////////////////////////////////////////////for Paytm
+                final String M_id = "ivvavE63222735647438";
+                final String cusomer_id = FirebaseAuth.getInstance().getUid();
+                final String order_id = UUID.randomUUID().toString().substring(0,28); //matlab 28 characters ki random string generate karenge
+                /// coz paytm ko hamesha ye random string dena hota h
+                String url = "https://bhaikiplatan.000webhostapp.com/paytm/generateChecksum.php";
+                final String callBackUrl = "https://pguat.paytm.com/paytmchecksum/paytmCallback.jsp";
+                /////////////////////////////////////////////////////////////////////////for Paytm
 
+
+                /////////////////////////////////////////////////////////////////////////for Volley
                 RequestQueue requestQueue = Volley.newRequestQueue(DeliveryActivity.this);
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
@@ -150,105 +155,130 @@ public class DeliveryActivity extends AppCompatActivity {
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
+                            Toast.makeText(DeliveryActivity.this, "1 me hu", Toast.LENGTH_SHORT).show();
                             if (jsonObject.has("CHECKSUMHASH")){
                                 String CHECKSUMHASH = jsonObject.getString("CHECKSUMHASH");
+                                Toast.makeText(DeliveryActivity.this, "2 me hu", Toast.LENGTH_SHORT).show();
 
-//                                PaytmPGService paytmPGService = PaytmPGService.getStagingService();
+
+//                                PaytmPGService paytmPGService = PaytmPGService.getStagingService("");
                                 PaytmPGService paytmPGService = PaytmPGService.getProductionService();
+                                Toast.makeText(DeliveryActivity.this, "3 me hu", Toast.LENGTH_SHORT).show();
+
+
                                 HashMap<String, String> paramMap = new HashMap<String,String>();
                                 paramMap.put( "MID" , M_id);
+// Key in your staging and production MID available in your dashboard
                                 paramMap.put( "ORDER_ID" , order_id);
-                                paramMap.put( "CUST_ID" , customer_id);
+                                paramMap.put( "CUST_ID" , cusomer_id);
                                 paramMap.put( "CHANNEL_ID" , "WAP");
-                                paramMap.put( "TXN_AMOUNT" , totalAmount.getText().toString().substring(3,totalAmount.getText().length()-2));
+                                paramMap.put( "TXN_AMOUNT" , totalAmount.getText().toString().substring(3,totalAmount.getText().length()-2)); //matlab apan sirf paise kitne h wo le rhe h Rs. and /- ye sab nhi
                                 paramMap.put( "WEBSITE" , "WEBSTAGING");
+// This is the staging value. Production value is available in your dashboard
                                 paramMap.put( "INDUSTRY_TYPE_ID" , "Retail");
+// This is the staging value. Production value is available in your dashboard
                                 paramMap.put( "CALLBACK_URL", callBackUrl);
-                                paramMap.put("CHECKSUMHASH", CHECKSUMHASH);
+                                paramMap.put("CHECKSUMHASH",CHECKSUMHASH);
 
                                 PaytmOrder order = new PaytmOrder(paramMap);
-
+                                Toast.makeText(DeliveryActivity.this, "4 me hu", Toast.LENGTH_SHORT).show();
                                 paytmPGService.initialize(order,null);
                                 paytmPGService.startPaymentTransaction(DeliveryActivity.this, true, true, new PaytmPaymentTransactionCallback() {
+
+
                                     @Override
                                     public void onTransactionResponse(Bundle inResponse) {
+                                        /*Display the message as below */
                                         Toast.makeText(getApplicationContext(), "Payment Transaction response " + inResponse.toString(), Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void networkNotAvailable() {
+                                        /*Display the message as below */
                                         Toast.makeText(getApplicationContext(), "Network connection error: Check your internet connectivity", Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void clientAuthenticationFailed(String inErrorMessage) {
+                                        /*Display the message as below */
                                         Toast.makeText(getApplicationContext(), "Authentication failed: Server error" + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void someUIErrorOccurred(String inErrorMessage) {
+                                        /*Display the error message as below */
                                         Toast.makeText(getApplicationContext(), "UI Error " + inErrorMessage , Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void onErrorLoadingWebPage(int iniErrorCode, String inErrorMessage, String inFailingUrl) {
+                                        /*Display the message as below */
                                         Toast.makeText(getApplicationContext(), "Unable to load webpage " + inErrorMessage.toString(), Toast.LENGTH_LONG).show();
+
                                     }
 
                                     @Override
                                     public void onBackPressedCancelTransaction() {
+                                        /*Display the message as below */
                                         Toast.makeText(getApplicationContext(), "Transaction cancelled" , Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void onTransactionCancel(String inErrorMessage, Bundle inResponse) {
-                                        Toast.makeText(getApplicationContext(), "Transaction cancelled" , Toast.LENGTH_LONG).show();
+                                        /*Display the message as below */
+                                        Toast.makeText(getApplicationContext(), "Transaction Cancelled " + inResponse.toString(), Toast.LENGTH_LONG).show();
                                     }
                                 });
-
-
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        }
+                        catch (JSONException e){
+                            Toast.makeText(DeliveryActivity.this, "5 me hu", Toast.LENGTH_SHORT).show();
                         }
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
                         loadingDialog.dismiss();
-                        Toast.makeText(DeliveryActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DeliveryActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
-                }){
+                })
+                {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> paramMap = new HashMap<String,String>();
                         paramMap.put( "MID" , M_id);
+// Key in your staging and production MID available in your dashboard
                         paramMap.put( "ORDER_ID" , order_id);
-                        paramMap.put( "CUST_ID" , customer_id);
+                        paramMap.put( "CUST_ID" , cusomer_id);
                         paramMap.put( "CHANNEL_ID" , "WAP");
-                        paramMap.put( "TXN_AMOUNT" , totalAmount.getText().toString().substring(3,totalAmount.getText().length()-2));
+                        paramMap.put( "TXN_AMOUNT" , totalAmount.getText().toString().substring(2,totalAmount.getText().length()-2)); //matlab apan sirf paise kitne h wo le rhe h Rs. and /- ye sab nhi
                         paramMap.put( "WEBSITE" , "WEBSTAGING");
+// This is the staging value. Production value is available in your dashboard
                         paramMap.put( "INDUSTRY_TYPE_ID" , "Retail");
+// This is the staging value. Production value is available in your dashboard
                         paramMap.put( "CALLBACK_URL", callBackUrl);
                         return paramMap;
                     }
                 };
 
                 requestQueue.add(stringRequest);
+                /////////////////////////////////////////////////////////////////////////for Volley
 
             }
         });
-
-
     }
 
 //    @Override
 //    protected void onStart() {
 //        super.onStart();
-//        fullname.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getFullname());
-//        fullAddress.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getAddress());
-//        pincode.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getPincode());
+//
+//        name = DBqueries.addressesModelList.get(DBqueries.selectedAddress).getFullname();
+//        mobileNo = DBqueries.addressesModelList.get(DBqueries.selectedAddress).getMobileNo();
+//        fullname.setText(name);
+//        fullAddress.setText(DBqueries.addressesModelList.get(DBqueries.selectedAddress).getAddress());
+//        pincode.setText(DBqueries.addressesModelList.get(DBqueries.selectedAddress).getPincode());
 //    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
