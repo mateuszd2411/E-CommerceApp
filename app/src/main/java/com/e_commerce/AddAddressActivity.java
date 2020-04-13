@@ -77,6 +77,7 @@ public class AddAddressActivity extends AppCompatActivity {
         landmark = findViewById(R.id.landmark);
         name = findViewById(R.id.name);
         alternateMobileNo = findViewById(R.id.alternative_mobile_no);
+        mobileNo = findViewById(R.id.mobile_no);
         stateSpinner = findViewById(R.id.state_spinner);
         saveBtn = findViewById(R.id.save_btn);
 
@@ -145,12 +146,12 @@ public class AddAddressActivity extends AppCompatActivity {
                                                     }else {
                                                         DBqueries.addressModelList.add(new AddressModel(name.getText().toString() + " - " + mobileNo.getText().toString()+" or "+alternateMobileNo.getText().toString(), fullAddress, pincode.getText().toString(), true));
                                                     }
-                                                    if (getIntent().getStringExtra("INTENT").equals("deliveryIntent")) {
-                                                        Intent deliveryIntent = new Intent(AddAddressActivity.this, DeliveryActivity.class);
-                                                        startActivity(deliveryIntent);
-                                                    }else {
-                                                        MyAddressesActivity.refreshItem(DBqueries.selectedAddress,DBqueries.addressModelList.size() - 1);
-                                                    }
+//                                                    if (getIntent().getStringExtra("INTENT").equals("deliveryIntent")) {
+//                                                        Intent deliveryIntent = new Intent(AddAddressActivity.this, DeliveryActivity.class);
+//                                                        startActivity(deliveryIntent);
+//                                                    }else {
+//                                                        MyAddressesActivity.refreshItem(DBqueries.selectedAddress,DBqueries.addressModelList.size() - 1);
+//                                                    }
                                                     DBqueries.selectedAddress = DBqueries.addressModelList.size() - 1;
                                                     finish();
 
@@ -184,6 +185,10 @@ public class AddAddressActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
+
     }
 
 

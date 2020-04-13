@@ -120,6 +120,18 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="16dp" />
 
+                <EditText
+                    android:id="@+id/mobile_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:hint="Moblie no.*"
+                    android:inputType="number"
+                    android:textColor="@color/colorPrimary" />
+
             </LinearLayout>
 
             <EditText
@@ -152,18 +164,6 @@
                 android:layout_weight="1"
                 android:hint="Name*"
                 android:inputType="textPersonName"
-                android:textColor="@color/colorPrimary" />
-
-            <EditText
-                android:id="@+id/mobile_no"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_weight="1"
-                android:layout_marginTop="8dp"
-                android:hint="Moblie no.*"
-                android:inputType="number"
                 android:textColor="@color/colorPrimary" />
 
             <EditText
