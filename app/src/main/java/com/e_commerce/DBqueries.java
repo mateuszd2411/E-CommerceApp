@@ -419,7 +419,8 @@ public class DBqueries {
                             addressModelList.add(new AddressModel(task.getResult().get("fullname_"+x).toString(),
                                     task.getResult().get("address"+x).toString(),
                                     task.getResult().get("pincode_"+x).toString(),
-                                    (boolean)task.getResult().get("selected_"+x)));
+                                    (boolean)task.getResult().get("selected_"+x),
+                                    task.getResult().get("mobile_no"+x).toString()));
                             if ((boolean)task.getResult().get("selected_"+x)){
                                 selectedAddress = Integer.parseInt(String.valueOf(x - 1));
                             }
