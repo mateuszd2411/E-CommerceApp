@@ -56,12 +56,13 @@ public class DeliveryActivity extends AppCompatActivity {
     public static final int SELECT_ADDRESS = 0;
     private TextView totalAmount;
     private TextView fullname;
+    private String  name,mobileNo;
     private TextView fullAddress;
     private TextView pincode;
     private Button continueBtn;
     private Dialog loadingDialog;
     private Dialog paymentMethodDialog;
-    private ImageButton paytm;
+    private ImageButton paytm,cod;
     private ConstraintLayout orderConfirmationLayout;
     private ImageButton continueShoppingBtn;
     private TextView orderID;
@@ -102,7 +103,7 @@ public class DeliveryActivity extends AppCompatActivity {
         ///loading dialog
 
 
-        ///loading dialog
+        ///payment dialog
 
         paymentMethodDialog = new Dialog(DeliveryActivity.this);
         paymentMethodDialog.setContentView(R.layout.payment_method);
@@ -110,9 +111,10 @@ public class DeliveryActivity extends AppCompatActivity {
         paymentMethodDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.slider_backgeound));
         paymentMethodDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         paytm = paymentMethodDialog.findViewById(R.id.paytm);
+        cod = paymentMethodDialog.findViewById(R.id.cod_btn);
 
 
-        ///loading dialog
+        ///payment dialog
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -137,6 +139,15 @@ public class DeliveryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 paymentMethodDialog.show();
+            }
+        });
+
+        cod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent optIntent = new Intent(DeliveryActivity.this,OPTverificationActivity.class);
+                optIntent.putExtra("mobileNo",mobileNo.substring(0,10));
+                startActivity(optIntent);
             }
         });
 
@@ -322,13 +333,15 @@ public class DeliveryActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        fullname.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getFullname());
+    @Override
+    protected void onStart() {
+        super.onStart();
+        name = DBqueries.addressModelList.get(DBqueries.selectedAddress).getFullname();
+        mobileNo = DBqueries.addressModelList.get(DBqueries.selectedAddress).getMobileNo();
+        fullname.setText(name + " - " + mobileNo);
 //        fullAddress.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getAddress());
 //        pincode.setText(DBqueries.addressModelList.get(DBqueries.selectedAddress).getPincode());
-//    }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
