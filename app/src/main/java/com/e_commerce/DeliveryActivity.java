@@ -205,12 +205,13 @@ public class DeliveryActivity extends AppCompatActivity {
                                             }
 
                                             if (fromCart){
+                                                loadingDialog.show();
                                                 Map<String,Object> updateCartList = new HashMap<>();
                                                 long cartListSize = 0;
                                                 final List<Integer> indexList = new ArrayList<>();
-                                                for (int x=0; x < DBqueries.cartItemModelList.size(); x++){
+                                                for (int x=0; x < DBqueries.cartList.size(); x++){
                                                     if (cartItemModelList.get(x).isInStock()){
-                                                        updateCartList.put("product_ID_"+x, cartItemModelList.get(x).getProductID());
+                                                        updateCartList.put("product_ID_"+cartListSize, cartItemModelList.get(x).getProductID());
                                                         cartListSize++;
                                                     }else {
                                                         indexList.add(x);
@@ -226,7 +227,8 @@ public class DeliveryActivity extends AppCompatActivity {
 
                                                             for (int x = 0; x < indexList.size();x++){
                                                                 DBqueries.cartList.remove(indexList.get(x));
-                                                                DBqueries.cartItemModelList.remove(indexList.get(x));
+                                                                DBqueries.cartItemModelList.remove(indexList.get(x).intValue());
+                                                                DBqueries.cartItemModelList.remove(DBqueries.cartItemModelList.size()-1);
                                                             }
                                                         }else {
                                                             String error = task.getException().getMessage();

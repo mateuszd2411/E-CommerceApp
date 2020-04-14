@@ -445,6 +445,9 @@ public class DBqueries {
         wishlistModelList.clear();
         cartList.clear();
         cartItemModelList.clear();
+        myRatedIds.clear();
+        myRating.clear();
+        addressModelList.clear();
     }
 
 

@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -107,11 +108,14 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                 coupenIcon.setVisibility(View.INVISIBLE);
                 freeCoupens.setVisibility(View.INVISIBLE);
             }
+            LinearLayout linearLayout = (LinearLayout) rating.getParent();
             if (inStock){
                 rating.setVisibility(View.VISIBLE);
                 totalRatings.setVisibility(View.VISIBLE);
                 productPrice.setTextColor(Color.parseColor("#000000"));
                 cuttedPrice.setVisibility(View.VISIBLE);
+                linearLayout.setVisibility(View.INVISIBLE);
+
 
                 rating.setText(averageRate);
                 totalRatings.setText("("+totalRatingsNo + ")ratings");
@@ -124,11 +128,13 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                 }
 
             }else {
+                linearLayout.setVisibility(View.INVISIBLE);
                 rating.setVisibility(View.INVISIBLE);
                 totalRatings.setVisibility(View.INVISIBLE);
                 productPrice.setText("Out of Stock");
                 productPrice.setTextColor(itemView.getContext().getResources().getColor(R.color.colorPrimary));
                 cuttedPrice.setVisibility(View.INVISIBLE);
+                paymentMethod.setVisibility(View.INVISIBLE);
             }
 
 
