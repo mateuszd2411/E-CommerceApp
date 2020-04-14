@@ -11,8 +11,9 @@ public class WishlistModel {
     private String productPrice;
     private String cuttedPrice;
     private boolean COD;
+    private boolean inStock;
 
-    public WishlistModel(String productId, String productImage, String productTitle, long freeCoupens, String rating, long totalRatings, String productPrice, String cuttedPrice, boolean COD) {
+    public WishlistModel(String productId, String productImage, String productTitle, long freeCoupens, String rating, long totalRatings, String productPrice, String cuttedPrice, boolean COD, boolean inStock) {
         this.productId = productId;
         this.productImage = productImage;
         this.productTitle = productTitle;
@@ -21,11 +22,20 @@ public class WishlistModel {
         this.totalRatings = totalRatings;
         this.productPrice = productPrice;
         this.cuttedPrice = cuttedPrice;
+        this.inStock = inStock;
         this.COD = COD;
     }
 
     public String getProductId() {
         return productId;
+    }
+
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
     }
 
     public void setProductId(String productId) {

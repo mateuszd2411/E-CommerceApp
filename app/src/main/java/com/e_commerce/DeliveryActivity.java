@@ -62,6 +62,7 @@ public class DeliveryActivity extends AppCompatActivity {
     private ConstraintLayout orderConfirmationLayout;
     private ImageButton continueShoppingBtn;
     private TextView orderID;
+    private boolean successResponse = false;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -181,7 +182,33 @@ public class DeliveryActivity extends AppCompatActivity {
                                 paytmPGService.startPaymentTransaction(DeliveryActivity.this, true, true, new PaytmPaymentTransactionCallback() {
                                     @Override
                                     public void onTransactionResponse(Bundle inResponse) {
-                                        Toast.makeText(getApplicationContext(), "Payment Transaction response " + inResponse.toString(), Toast.LENGTH_LONG).show();
+//                                        Toast.makeText(getApplicationContext(), "Payment Transaction response " + inResponse.toString(), Toast.LENGTH_LONG).show();
+
+                                        if (inResponse.getString("STATUS").equals("TXN_SUCCESS")){
+
+                                            successResponse = true;
+
+                                            if (MainActivity.mainActivity !=null){
+                                                MainActivity.mainActivity.finish();
+                                                MainActivity.mainActivity = null;
+                                                MainActivity.showCart = false;
+                                            }
+
+                                            if (ProductDetailsActivity.productDetailsActivity !=null){
+                                                ProductDetailsActivity.productDetailsActivity.finish();
+                                                ProductDetailsActivity.productDetailsActivity = null;
+                                            }
+
+                                            orderID.setText("Order ID " +inResponse.getString("ORDERID"));
+                                            orderConfirmationLayout.setVisibility(View.VISIBLE);
+                                            continueShoppingBtn.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    finish();
+                                                }
+                                            });
+
+                                        }
                                     }
 
                                     @Override
@@ -277,5 +304,14 @@ public class DeliveryActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         loadingDialog.dismiss();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (successResponse){
+            finish();
+            return;
+        }
+        super.onBackPressed();
     }
 }
