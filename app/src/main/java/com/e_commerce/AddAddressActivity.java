@@ -109,7 +109,7 @@ public class AddAddressActivity extends AppCompatActivity {
                         if (!TextUtils.isEmpty(flatNo.getText())){
                             if (!TextUtils.isEmpty(pincode.getText()) && pincode.getText().length() == 4){
                                 if (!TextUtils.isEmpty(name.getText())){
-                                    if (!TextUtils.isEmpty(mobileNo.getText()) && mobileNo.getText().length() == 10){
+                                    if (!TextUtils.isEmpty(mobileNo.getText()) && mobileNo.getText().length() > 5){
 
                                         loadingDialog.show();
 
